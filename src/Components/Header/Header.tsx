@@ -1,37 +1,39 @@
-import { Avatar } from "@mantine/core";
+import { Avatar, Indicator } from "@mantine/core";
 import { TbAsset, TbBell, TbSettings } from "react-icons/tb";
 import ProfilePhoto from "../../assets/profilePhoto.png";
+import NavLinks from "./NavLinks";
 
 const Header = () => {
   return (
     <div className="w-full h-20 flex justify-between items-center p-6 bg-mine-shaft-950 text-white">
       {/* Logo */}
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1 text-bright-sun-400">
         <TbAsset className="h-8 w-8" />
         <p className="text-2xl font-bold">JobKonnect</p>
       </div>
 
       {/* Nav Menus */}
-      <div className="flex items-center gap-5">
-        <a href="">Find Job</a>
-        <a href="">Find Talent</a>
-        <a href="">Upload Job</a>
-        <a href="">About Us</a>
-      </div>
-
+      <NavLinks />
       {/* Profile, Notification & Setting */}
       <div className="flex items-center gap-3">
         {/* Profile */}
         <div className="flex items-center gap-1">
-          <Avatar src={ProfilePhoto} alt="it's me" />
+          <Avatar src={ProfilePhoto} alt="ProfilePhoto" />
           <p>Aman</p>
         </div>
 
         {/* Settings */}
-        <TbSettings className="text-2xl" />
+        <div className="bg-mine-shaft-900 p-1.5 rounded-full">
+          <TbSettings className="text-2xl" />
+        </div>
 
         {/* Notification */}
-        <TbBell className="text-2xl" />
+        <div className="bg-mine-shaft-900 p-1.5 rounded-full">
+          {/* Mantine Theme Color - "brightSun.4" */}
+          <Indicator color="brightSun.4" size={8} offset={6} processing>
+            <TbBell className="text-2xl" />
+          </Indicator>
+        </div>
       </div>
     </div>
   );
