@@ -1,9 +1,10 @@
 import { Avatar } from "@mantine/core";
 import { TbAsset, TbBell, TbSettings } from "react-icons/tb";
+import ProfilePhoto from "../../assets/profilePhoto.png";
 
 const Header = () => {
   return (
-    <div className="w-full h-20 flex justify-between items-center p-6 bg-slate-900 text-white">
+    <div className="w-full h-20 flex justify-between items-center p-6 bg-mine-shaft-950 text-white">
       {/* Logo */}
       <div className="flex items-center gap-1">
         <TbAsset className="h-8 w-8" />
@@ -22,8 +23,8 @@ const Header = () => {
       <div className="flex items-center gap-3">
         {/* Profile */}
         <div className="flex items-center gap-1">
-          <Avatar src="avatar.png" alt="it's me" />
-          <p>Username</p>
+          <Avatar src={ProfilePhoto} alt="it's me" />
+          <p>Aman</p>
         </div>
 
         {/* Settings */}
