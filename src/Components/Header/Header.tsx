@@ -5,7 +5,7 @@ import NavLinks from "./NavLinks";
 
 const Header = () => {
   return (
-    <div className="w-full h-20 flex justify-between items-center p-6 bg-mine-shaft-950 text-white">
+    <div className="w-full h-20 flex justify-between items-center px-6 bg-mine-shaft-950 text-white">
       {/* Logo */}
       <div className="flex items-center gap-1 text-bright-sun-400">
         <TbAsset className="h-8 w-8" />
