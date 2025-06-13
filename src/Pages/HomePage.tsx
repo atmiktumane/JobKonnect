@@ -1,4 +1,5 @@
 import Header from "../Components/Header/Header";
+import Companies from "../Components/LandingPage/Companies";
 import DreamJob from "../Components/LandingPage/DreamJob";
 
 const HomePage = () => {
@@ -6,6 +7,7 @@ const HomePage = () => {
     <div className="min-h-[100vh] bg-mine-shaft-900 font-['poppins']">
       <Header />
       <DreamJob />
+      <Companies />
     </div>
   );
 };
