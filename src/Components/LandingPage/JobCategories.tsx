@@ -26,7 +26,7 @@ const JobCategories = () => {
           }}
         >
           {categories.map((category, index) => (
-            <Carousel.Slide>
+            <Carousel.Slide key={index}>
               <div className="w-64 flex flex-col items-center gap-3 p-3 border border-bright-sun-400 rounded-lg text-center hover:cursor-pointer hover:shadow-lg hover:shadow-bright-sun-500 transition duration-500 ease-in-out">
                 {/* Logo */}
                 <div className="w-fit bg-bright-sun-300 p-2 rounded-full">
