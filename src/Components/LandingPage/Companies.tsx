@@ -12,7 +12,7 @@ const Companies = () => {
       <Marquee>
         {companies.map((company, index) => (
           <div key={index} className="mx-8">
-            <img src={`/${company}.png`} alt="" className="h-14" />
+            <img src={`/Companies/${company}.png`} alt="" className="h-14" />
           </div>
         ))}
       </Marquee>
