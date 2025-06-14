@@ -5,7 +5,7 @@ import JobCategories from "../Components/LandingPage/JobCategories";
 
 const HomePage = () => {
   return (
-    <div className="min-h-[100vh] bg-mine-shaft-900 font-['poppins']">
+    <div className="min-h-[100vh] bg-mine-shaft-950 font-['poppins']">
       <Header />
       <DreamJob />
       <Companies />

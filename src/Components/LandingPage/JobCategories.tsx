@@ -24,6 +24,8 @@ const JobCategories = () => {
           emblaOptions={{
             loop: true,
           }}
+          //  below is the Advanced Tailwind CSS used : "&_button" -> targets button inside Carousel
+          className="[&_button]:border-none [&_button]:bg-bright-sun-300 [&_button]:opacity-0 [&_button]:hover:opacity-75 hover:[&_button]:opacity-100"
         >
           {categories.map((category, index) => (
             <Carousel.Slide key={index}>
