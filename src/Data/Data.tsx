@@ -83,4 +83,27 @@ const workings = [
   },
 ];
 
-export { companies, categories, workings };
+const testimonials = [
+  {
+    username: "Shivam Patel",
+    desc: "This job portal made job search easy and quick. Recommended to all job seekers!",
+    ratings: 5,
+  },
+  {
+    username: "Abhishek Kullu",
+    desc: "Found my dream job within a week! The application process was smooth.",
+    ratings: 4.5,
+  },
+  {
+    username: "Swapnil Pandey",
+    desc: "I secured a job offer within days of applying. Exceptional user experience and support.",
+    ratings: 4,
+  },
+  {
+    username: "Pavan Barnana",
+    desc: "Highly efficient job portal with excellent resources. Helped me land a great position.",
+    ratings: 3.5,
+  },
+];
+
+export { companies, categories, workings, testimonials };
