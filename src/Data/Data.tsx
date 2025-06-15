@@ -65,4 +65,22 @@ const categories = [
   },
 ];
 
-export { companies, categories };
+const workings = [
+  {
+    id: "Working1",
+    name: "Build Your Resume",
+    desc: "Create a standout resume with your skills.",
+  },
+  {
+    id: "Working2",
+    name: "Apply for Job",
+    desc: "Find and apply for jobs that match your skills.",
+  },
+  {
+    id: "Working3",
+    name: "Get Hired",
+    desc: "Connect with employers and start your new job.",
+  },
+];
+
+export { companies, categories, workings };
