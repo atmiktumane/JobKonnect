@@ -1,4 +1,3 @@
-import React from "react";
 import { FaSearch } from "react-icons/fa";
 import bannerBoy from "/boy.png";
 import { Avatar } from "@mantine/core";

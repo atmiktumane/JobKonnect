@@ -16,7 +16,7 @@ export const Subscribe = () => {
           <input
             type="email"
             placeholder="Your@email.com"
-            className="w-3/4 bg-transparent text-mine-shaft-100"
+            className="w-3/4 bg-transparent text-mine-shaft-100 "
           />
 
           {/* button */}
