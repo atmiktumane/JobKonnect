@@ -107,12 +107,12 @@ const testimonials = [
 ];
 
 const footerLinks = [
-  { title: "Product", link: ["Find Job", "Find Company", "Find Employee"] },
+  { title: "Product", links: ["Find Job", "Find Company", "Find Employee"] },
   {
     title: "Company",
-    link: ["About Us", "Contact Us", "Privacy Policy", "Terms & Conditions"],
+    links: ["About Us", "Contact Us", "Privacy Policy", "Terms & Conditions"],
   },
-  { title: "Support", link: ["Help & Support", "Feedback", "FAQs"] },
+  { title: "Support", links: ["Help & Support", "Feedback", "FAQs"] },
 ];
 
 export { companies, categories, workings, testimonials, footerLinks };
