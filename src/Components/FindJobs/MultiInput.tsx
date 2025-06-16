@@ -1,6 +1,5 @@
 import {
   Checkbox,
-  CheckIcon,
   Combobox,
   Group,
   Input,
@@ -8,27 +7,18 @@ import {
   PillsInput,
   useCombobox,
 } from "@mantine/core";
-import { useState } from "react";
-import { IoSearchOutline } from "react-icons/io5";
-
-const groceries = [
-  "🍎 Apples",
-  "🍌 Bananas",
-  "🥦 Broccoli",
-  "🥕 Carrots",
-  "🍫 Chocolate",
-];
+import { useEffect, useState } from "react";
 
 const MAX_DISPLAYED_VALUES = 2;
 
-export const MultiInput = () => {
+export const MultiInput = (props: any) => {
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
     onDropdownOpen: () => combobox.updateSelectedOptionIndex("active"),
   });
 
   const [search, setSearch] = useState("");
-  const [data, setData] = useState(groceries);
+  const [data, setData] = useState<string[]>([]);
   const [value, setValue] = useState<string[]>([]);
 
   const exactOptionMatch = data.some((item) => item === search);
@@ -87,6 +77,10 @@ export const MultiInput = () => {
       </Combobox.Option>
     ));
 
+  useEffect(() => {
+    setData(props.options);
+  }, []);
+
   return (
     <Combobox
       store={combobox}
@@ -101,7 +95,7 @@ export const MultiInput = () => {
           onClick={() => combobox.toggleDropdown()}
           leftSection={
             <div className="text-bright-sun-400 bg-mine-shaft-900 p-1 rounded-lg">
-              <IoSearchOutline />
+              <props.icon />
             </div>
           }
         >
@@ -115,7 +109,7 @@ export const MultiInput = () => {
               </>
             ) : (
               <Input.Placeholder className="!text-mine-shaft-200">
-                Job Title
+                {props.title}
               </Input.Placeholder>
             )}
           </Pill.Group>
@@ -128,7 +122,7 @@ export const MultiInput = () => {
         <Combobox.Search
           value={search}
           onChange={(event) => setSearch(event.currentTarget.value)}
-          placeholder="Search groceries"
+          placeholder={`Search ${props.title}`}
         />
         <Combobox.Options>
           {options}
