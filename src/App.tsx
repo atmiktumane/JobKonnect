@@ -39,10 +39,11 @@ const App = () => {
         "#2d2d2d",
       ],
     },
+    fontFamily: "poppins, sans-serif",
   });
 
   return (
-    <MantineProvider theme={theme}>
+    <MantineProvider defaultColorScheme="dark" theme={theme}>
       <Header />
 
       <Routes>

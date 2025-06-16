@@ -1,3 +1,9 @@
+import { MultiInput } from "./MultiInput";
+
 export const SearchBar = () => {
-  return <div>SearchBar</div>;
+  return (
+    <div>
+      <MultiInput />
+    </div>
+  );
 };
