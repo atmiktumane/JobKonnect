@@ -25,7 +25,7 @@ export const Sort = () => {
     <>
       <Combobox
         store={combobox}
-        width={200}
+        width={170}
         position="bottom-end"
         withArrow
         withinPortal={false}
