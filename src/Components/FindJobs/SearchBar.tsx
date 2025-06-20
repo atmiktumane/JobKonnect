@@ -8,7 +8,7 @@ export const SearchBar = () => {
   const [value, setValue] = useState<[number, number]>([3, 90]);
 
   return (
-    <div className="flex gap-3 px-5 py-10">
+    <div className="flex gap-3 py-10">
       {dropdownData.map((item, index) => (
         <>
           <div key={index} className="w-1/5 bg-mine-shaft-900 rounded-lg">
@@ -18,7 +18,7 @@ export const SearchBar = () => {
         </>
       ))}
 
-      {/* Salary Range Selector */}
+      {/* Salary Range Selector + Advance Tailwind CSS [&_.class_name] -> class selector */}
       <div className="w-1/5 text-sm [&_.mantine-Slider-label]:!translate-y-10">
         {/* Row 1 - Heading */}
         <div className="flex items-center justify-between">
