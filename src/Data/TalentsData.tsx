@@ -125,4 +125,64 @@ const talents = [
   },
 ];
 
-export { searchFields, talents };
+const profile = {
+  name: "Jarrod Wood",
+  role: "Software Engineer",
+  company: "Google",
+  location: "New York, United States",
+  about:
+    "As a Software Engineer at Google, I specialize in building scalable and high-performance applications. My expertise lies in integrating front-end and back-end technologies to deliver seamless user experiences. With a strong foundation in React and SpringBoot, and a focus on MongoDB for database solutions, I am passionate about leveraging the latest technologies to solve complex problems and drive innovation. My goal is to create impactful software that enhances productivity and meets user needs effectively.",
+  skills: [
+    "React",
+    "SpringBoot",
+    "MongoDB",
+    "HTML",
+    "CSS",
+    "Javascript",
+    "Node.js",
+    "Express",
+    "MySQL",
+    "Python",
+    "Django",
+    "Figma",
+    "Sketch",
+    "Docker",
+    "AWS",
+  ],
+  experiences: [
+    {
+      title: "Software Engineer III",
+      company: "Google",
+      location: "New York, United States",
+      startDate: "Apr 2022",
+      endDate: "Present",
+      description:
+        "As a Software Engineer at Google, I specialize in building scalable and high-performance applications. My expertise lies in integrating front-end and back-end technologies to deliver seamless user experiences. With a strong foundation in React and SpringBoot, and a focus on MongoDB for database solutions, I am passionate about leveraging the latest technologies to solve complex problems and drive innovation. My goal is to create impactful software that enhances productivity and meets user needs effectively.",
+    },
+    {
+      title: "Software Engineer",
+      company: "Microsoft",
+      location: "Seattles, United States",
+      startDate: "Aug 2020",
+      endDate: "March 2022",
+      description:
+        "As a Software Engineer at Microsoft, I specialize in building scalable and high-performance applications. My expertise lies in integrating front-end and back-end technologies to deliver seamless user experiences. With a strong foundation in React and SpringBoot, and a focus on MongoDB for database solutions, I am passionate about leveraging the latest technologies to solve complex problems and drive innovation. My goal is to create impactful software that enhances productivity and meets user needs effectively.",
+    },
+  ],
+  certifications: [
+    {
+      name: "Google Professional Cloud Architech",
+      issuer: "Google",
+      issueDate: "Aug 2023",
+      certificateId: "CB72982GG",
+    },
+    {
+      name: "Microsoft Certified: Azure Solutions Architech Expert",
+      issuer: "Microsoft",
+      issueDate: "May 2022",
+      certificateId: "MS12345AZ",
+    },
+  ],
+};
+
+export { searchFields, talents, profile };

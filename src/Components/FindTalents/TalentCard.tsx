@@ -53,7 +53,7 @@ export const TalentCard = (props: any) => {
 
       {/* Row 5 */}
       <div className="flex items-center gap-3 [&>*]:w-1/2">
-        <Link to="/profile">
+        <Link to="/talent-profile">
           <Button fullWidth variant="outline" color="brightSun.4">
             Profile
           </Button>
