@@ -93,11 +93,7 @@ export const MultiInput = (props: any) => {
           variant="unstyled"
           rightSection={<Combobox.Chevron />}
           onClick={() => combobox.toggleDropdown()}
-          leftSection={
-            <div className="text-bright-sun-400 bg-mine-shaft-900 p-1 rounded-lg">
-              <props.icon />
-            </div>
-          }
+          leftSection={<props.icon className="text-bright-sun-400" />}
         >
           <Pill.Group>
             {value.length > 0 ? (

@@ -1,0 +1,19 @@
+import { Divider } from "@mantine/core";
+import { TalentSearchBar } from "../Components/FindTalents/TalentSearchBar";
+import { Talents } from "../Components/FindTalents/Talents";
+
+export const FindTalents = () => {
+  return (
+    <div className="min-h-[100vh] bg-mine-shaft-950 px-6 font-['poppins']">
+      <Divider size="xs" />
+
+      {/* Talent - Search Row */}
+      <TalentSearchBar />
+
+      <Divider size="xs" />
+
+      {/* Content */}
+      <Talents />
+    </div>
+  );
+};
