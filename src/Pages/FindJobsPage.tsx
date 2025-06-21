@@ -5,8 +5,6 @@ import { Jobs } from "../Components/FindJobs/Jobs";
 export const FindJobsPage = () => {
   return (
     <div className="min-h-[100vh] bg-mine-shaft-950 px-6 font-['poppins']">
-      <Divider size="xs" />
-
       <SearchBar />
 
       <Divider size="xs" />
