@@ -5,8 +5,8 @@ import HomePage from "./Pages/HomePage";
 import { Route, Routes } from "react-router-dom";
 import Header from "./Components/Header/Header";
 import { Footer } from "./Components/Footer/Footer";
-import { FindJobs } from "./Pages/FindJobs";
-import { FindTalents } from "./Pages/FindTalents";
+import { FindJobsPage } from "./Pages/FindJobsPage";
+import { FindTalentsPage } from "./Pages/FindTalentsPage";
 
 const App = () => {
   // Mantine Theme Color
@@ -48,8 +48,8 @@ const App = () => {
       <Header />
 
       <Routes>
-        <Route path="/find-job" element={<FindJobs />} />
-        <Route path="/find-talent" element={<FindTalents />} />
+        <Route path="/find-job" element={<FindJobsPage />} />
+        <Route path="/find-talent" element={<FindTalentsPage />} />
         <Route path="*" element={<HomePage />} />
       </Routes>
 

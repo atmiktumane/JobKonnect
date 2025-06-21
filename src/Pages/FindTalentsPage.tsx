@@ -2,7 +2,7 @@ import { Divider } from "@mantine/core";
 import { TalentSearchBar } from "../Components/FindTalents/TalentSearchBar";
 import { Talents } from "../Components/FindTalents/Talents";
 
-export const FindTalents = () => {
+export const FindTalentsPage = () => {
   return (
     <div className="min-h-[100vh] bg-mine-shaft-950 px-6 font-['poppins']">
       <Divider size="xs" />
