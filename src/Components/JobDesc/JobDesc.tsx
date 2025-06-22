@@ -1,8 +1,11 @@
 import { Button, Divider } from "@mantine/core";
 import { TbBookmark } from "react-icons/tb";
-import { cards, skills } from "../../Data/JobDescData";
+import { cards, desc, skills } from "../../Data/JobDescData";
+//@ts-ignore
+import DOMPurify from "dompurify";
 
 export const JobDesc = () => {
+  const data = DOMPurify.sanitize(desc);
   return (
     <div className="flex gap-5">
       {/* Left - Job Description */}
@@ -75,6 +78,14 @@ export const JobDesc = () => {
             })}
           </div>
         </div>
+
+        <Divider size="xs" my="xl" />
+
+        {/* Advance HTML & CSS - DOM Purify */}
+        <div
+          className="[&_h4]:font-semibold [&_h4]:text-lg [&_h4]:my-4 [&_p]:text-justify [&_li]:marker:text-bright-sun-400 [&_li]:mb-2 "
+          dangerouslySetInnerHTML={{ __html: data }}
+        ></div>
       </div>
     </div>
   );
