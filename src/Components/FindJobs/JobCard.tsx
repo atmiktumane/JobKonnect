@@ -1,10 +1,14 @@
 import { Divider, Text } from "@mantine/core";
 import { FaRegClock } from "react-icons/fa";
 import { TbBookmark } from "react-icons/tb";
+import { Link } from "react-router-dom";
 
 export const JobCard = (props: any) => {
   return (
-    <div className="flex flex-col gap-3 p-4 bg-mine-shaft-900 rounded-lg hover:shadow-[0_0_3px_3px_black] hover:shadow-bright-sun-300">
+    <Link
+      to="/job-desc"
+      className="flex flex-col gap-3 p-4 bg-mine-shaft-900 rounded-lg hover:shadow-[0_0_3px_3px_black] hover:shadow-bright-sun-300 cursor-pointer"
+    >
       {/* Row 1 */}
       <div className="flex justify-between">
         <div className="flex items-center gap-3">
@@ -52,6 +56,6 @@ export const JobCard = (props: any) => {
           <p>{props.postedDaysAgo} days ago</p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };

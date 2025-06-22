@@ -10,6 +10,7 @@ import { FindJobsPage } from "./Pages/FindJobsPage";
 import { FindTalentsPage } from "./Pages/FindTalentsPage";
 import { TalentProfilePage } from "./Pages/TalentProfilePage";
 import { PostJobPage } from "./Pages/PostJobPage";
+import { JobDescPage } from "./Pages/JobDescPage";
 
 const App = () => {
   // Mantine Theme Color
@@ -58,8 +59,9 @@ const App = () => {
       <Routes>
         <Route path="/find-job" element={<FindJobsPage />} />
         <Route path="/find-talent" element={<FindTalentsPage />} />
-        <Route path="/talent-profile" element={<TalentProfilePage />} />
         <Route path="/post-job" element={<PostJobPage />} />
+        <Route path="/job-desc" element={<JobDescPage />} />
+        <Route path="/talent-profile" element={<TalentProfilePage />} />
         <Route path="*" element={<HomePage />} />
       </Routes>
 
