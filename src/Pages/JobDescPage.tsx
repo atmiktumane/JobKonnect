@@ -19,7 +19,7 @@ export const JobDescPage = () => {
       </Link>
 
       {/* Content */}
-      <div className="flex justify-between gap-5">
+      <div className="mt-8 flex justify-between gap-5">
         {/* Left - Job Description */}
         <JobDesc />
 
