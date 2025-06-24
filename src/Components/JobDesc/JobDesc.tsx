@@ -116,9 +116,11 @@ export const JobDesc = () => {
           </div>
 
           {/* Right - Apply Button */}
-          <Button variant="light" color="brightSun.4">
-            Company Page
-          </Button>
+          <Link to="/company">
+            <Button variant="light" color="brightSun.4">
+              Company Page
+            </Button>
+          </Link>
         </div>
 
         {/* Company About Us */}
