@@ -3,7 +3,7 @@ import { TalentCard } from "../FindTalents/TalentCard";
 
 export const CompanyEmployees = () => {
   return (
-    <div className="mt-10">
+    <div>
       {/* Talent Cards */}
       <div className="grid grid-cols-2 gap-5">
         {talents.map((talent, index) => (

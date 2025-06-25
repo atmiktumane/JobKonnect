@@ -33,7 +33,7 @@ export const Company = () => {
       <div>
         <Tabs variant="outline" radius="lg" defaultValue="about">
           {/* Tabs - Heading */}
-          <Tabs.List className="[&_button]:!text-md [&_button]:!pt-3 font-semibold [&_button[data-active='true']]:text-bright-sun-400">
+          <Tabs.List className="[&_button]:!text-md [&_button]:!pt-3 font-semibold [&_button[data-active='true']]:text-bright-sun-400 mb-8">
             <Tabs.Tab value="about">About</Tabs.Tab>
             <Tabs.Tab value="job">Jobs</Tabs.Tab>
             <Tabs.Tab value="employee">Employees</Tabs.Tab>

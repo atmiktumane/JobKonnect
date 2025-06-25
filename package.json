@@ -12,6 +12,7 @@
   "dependencies": {
     "@mantine/carousel": "^8.1.0",
     "@mantine/core": "^8.1.1",
+    "@mantine/dates": "^8.1.2",
     "@mantine/hooks": "^8.1.1",
     "@mantine/tiptap": "^8.1.1",
     "@reduxjs/toolkit": "^2.8.2",
@@ -24,6 +25,7 @@
     "@tiptap/pm": "^2.22.2",
     "@tiptap/react": "^2.22.2",
     "@tiptap/starter-kit": "^2.22.2",
+    "dayjs": "^1.11.13",
     "dompurify": "^3.2.6",
     "embla-carousel": "^8.6.0",
     "embla-carousel-react": "^8.6.0",

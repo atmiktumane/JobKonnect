@@ -3,7 +3,7 @@ import { companyData } from "../../Data/CompanyData";
 export const AboutCompany = () => {
   const company: { [key: string]: any } = companyData;
   return (
-    <div className="mt-8">
+    <div>
       {Object.keys(company).map(
         (key, index) =>
           key !== "Name" && (

@@ -5,10 +5,10 @@ import { cards, desc, skills } from "../../Data/JobDescData";
 import DOMPurify from "dompurify";
 import { Link } from "react-router-dom";
 
-export const JobDesc = () => {
+export const JobDesc = (props: any) => {
   const data = DOMPurify.sanitize(desc);
   return (
-    <div className="w-3/4">
+    <div>
       {/* Row 1 */}
       <div className="flex justify-between">
         {/* Left */}
@@ -33,15 +33,32 @@ export const JobDesc = () => {
 
         {/* Right */}
         <div className="flex flex-col items-center gap-2">
-          {/* Apply Button */}
-          <Link to="/apply-job">
-            <Button variant="light" color="brightSun.4">
-              Apply
-            </Button>
-          </Link>
+          {/* Condition => overview ? (PostedJob Page Overview - Edit,Delete) : (Job Desc Page - Apply,BookMark) */}
+          {props.overview ? (
+            <>
+              {/* Edit Button */}
+              <Button variant="light" color="brightSun.4">
+                Edit
+              </Button>
 
-          {/* Save Job Icon */}
-          <TbBookmark className="text-2xl text-bright-sun-400 cursor-pointer" />
+              {/* Delete Button */}
+              <Button variant="outline" color="red.4">
+                Delete
+              </Button>
+            </>
+          ) : (
+            <>
+              {/* Apply Button */}
+              <Link to="/apply-job">
+                <Button variant="light" color="brightSun.4">
+                  Apply
+                </Button>
+              </Link>
+
+              {/* Save Job Icon */}
+              <TbBookmark className="text-2xl text-bright-sun-400 cursor-pointer" />
+            </>
+          )}
         </div>
       </div>
 

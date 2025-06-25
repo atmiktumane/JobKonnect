@@ -3,7 +3,7 @@ import { JobCard } from "../FindJobs/JobCard";
 
 export const CompanyJobs = () => {
   return (
-    <div className="mt-10 grid grid-cols-2 gap-5">
+    <div className="grid grid-cols-2 gap-5">
       {jobList.map((item, index) => (
         // {/* Card */}
         <JobCard key={index} {...item} />
