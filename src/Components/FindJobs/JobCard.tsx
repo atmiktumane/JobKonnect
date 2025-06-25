@@ -51,9 +51,11 @@ export const JobCard = (props: any) => {
       {/* Row 4 */}
       <div className="flex items-center justify-between">
         <p className="font-semibold">&#8377;{props.package}</p>
-        <div className="flex items-center gap-2 text-sm">
-          <FaRegClock />
-          <p>{props.postedDaysAgo} days ago</p>
+        <div className="flex items-center gap-1">
+          <FaRegClock className="text-sm text-mine-shaft-400" />
+          <p className="text-sm text-mine-shaft-400">
+            Posted {props.postedDaysAgo} days ago
+          </p>
         </div>
       </div>
     </Link>

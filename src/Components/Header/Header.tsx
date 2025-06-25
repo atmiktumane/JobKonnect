@@ -2,15 +2,19 @@ import { Avatar, Indicator } from "@mantine/core";
 import { TbAsset, TbBell, TbSettings } from "react-icons/tb";
 import ProfilePhoto from "../../assets/profilePhoto.png";
 import NavLinks from "./NavLinks";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
     <div className="font-['poppins'] w-full h-20 flex justify-between items-center px-6 bg-mine-shaft-950 text-white">
       {/* Logo */}
-      <div className="flex items-center gap-1 text-bright-sun-400">
+      <Link
+        to="/home"
+        className="flex items-center gap-1 text-bright-sun-400 cursor-pointer"
+      >
         <TbAsset className="h-8 w-8" />
         <p className="text-2xl font-bold">JobKonnect</p>
-      </div>
+      </Link>
 
       {/* Nav Menus */}
       <NavLinks />
