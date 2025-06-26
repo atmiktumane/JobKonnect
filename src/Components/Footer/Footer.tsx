@@ -1,9 +1,11 @@
 import { FaInstagram, FaRegPaperPlane } from "react-icons/fa";
 import { TbAsset, TbBrandYoutube } from "react-icons/tb";
 import { footerLinks } from "../../Data/Data";
+import { useLocation } from "react-router-dom";
 
 export const Footer = () => {
-  return (
+  const location = useLocation();
+  return location.pathname !== "/signup" && location.pathname !== "/login" ? (
     <div className="bg-mine-shaft-950 font-['poppins']">
       <div className="px-[50px] lg:px-[80px] py-8 flex flex-col items-center gap-10 border-b-[0.5px] border-mine-shaft-100">
         <div className="w-full flex items-start justify-between gap-5 ">
@@ -72,5 +74,7 @@ export const Footer = () => {
         <span className="text-bright-sun-400">Atmik @2025</span>
       </div>
     </div>
+  ) : (
+    <></>
   );
 };
