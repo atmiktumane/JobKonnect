@@ -1,54 +1,36 @@
-# React + TypeScript + Vite
+# JobKonnect
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**JobKonnect** is a modern job portal platform inspired by LinkedIn, designed to seamlessly connect job seekers with employers. It enables companies to post job openings, and allows candidates to explore and apply for opportunities based on their skills and interests.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+### For Job Seekers
+- Browse jobs posted by top companies
+- View job details and company profiles
+- Apply directly to job openings
+- Create and manage user profile
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### For Employers
+- Post new job openings with detailed descriptions
+- Manage all job postings in one place
+- View applications and candidate profiles
+- Search for candidates based on skills
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Tech Stack
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Layer           | Technology Used                  |
+|----------------|----------------------------------|
+| Frontend       | React JS, Tailwind CSS, Mantine UI |
+| Backend        | Java, Spring Boot                |
+| Database       | MongoDB / MySQL (as applicable)  |
+| Hosting (FE)   | Vercel                           |
+| Hosting (BE)   | TBD / Spring Boot deployment     |
+| Version Control| Git + GitHub                     |
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+---
+
+Dependency Conflict solution : npm install --legacy-peer-deps
