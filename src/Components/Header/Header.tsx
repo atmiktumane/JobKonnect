@@ -1,8 +1,8 @@
-import { Avatar, Indicator } from "@mantine/core";
+import { Indicator } from "@mantine/core";
 import { TbAsset, TbBell, TbSettings } from "react-icons/tb";
-import ProfilePhoto from "../../assets/profilePhoto.png";
 import NavLinks from "./NavLinks";
 import { Link, useLocation } from "react-router-dom";
+import { ProfileMenu } from "./ProfileMenu";
 
 const Header = () => {
   const location = useLocation();
@@ -19,13 +19,10 @@ const Header = () => {
 
       {/* Nav Menus */}
       <NavLinks />
+
       {/* Profile, Notification & Setting */}
       <div className="flex items-center gap-3">
-        {/* Profile */}
-        <div className="flex items-center gap-1">
-          <Avatar src={ProfilePhoto} alt="ProfilePhoto" />
-          <p>Aman</p>
-        </div>
+        <ProfileMenu />
 
         {/* Settings */}
         <div className="bg-mine-shaft-900 p-1.5 rounded-full">

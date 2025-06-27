@@ -18,6 +18,7 @@ import { PostedJobPage } from "./Pages/PostedJobPage";
 import { JobHistoryPage } from "./Pages/JobHistoryPage";
 import { SignupPage } from "./Pages/SignupPage";
 import { LoginPage } from "./Pages/LoginPage";
+import { ProfilePage } from "./Pages/ProfilePage";
 
 const App = () => {
   // Mantine Theme Color
@@ -73,10 +74,15 @@ const App = () => {
         <Route path="/company" element={<CompanyPage />} />
         <Route path="/posted-job" element={<PostedJobPage />} />
         <Route path="/job-history" element={<JobHistoryPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="*" element={<HomePage />} />
       </Routes>
+
+      <div className="py-8 bg-mine-shaft-950">
+        <Divider size="xs" />
+      </div>
 
       <Footer />
     </MantineProvider>
