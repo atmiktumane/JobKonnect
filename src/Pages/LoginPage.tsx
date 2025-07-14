@@ -1,9 +1,57 @@
 import { Button, PasswordInput, TextInput } from "@mantine/core";
+import axios from "axios";
+import { useState } from "react";
 import { MdLockOutline, MdOutlineAlternateEmail } from "react-icons/md";
 import { TbAsset } from "react-icons/tb";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const navigate = useNavigate();
+
+  // Save Login Data : onChange of input fields
+  const handleChange = (e: any) => {
+    // console.log(e.target);
+    const { name, value } = e.target;
+    setLoginData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Login API
+  const handleLoginSubmit = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      if (loginData.email === "" || loginData.password === "") {
+        alert("All fields are mandatory");
+        return;
+      }
+
+      // Login API call
+      await axios.post(`${apiUrl}/api/v1/users/login`, loginData);
+
+      // console.log(response);
+
+      // Success Modal
+      alert("User login is successfull !");
+
+      // Navigate to Home page
+      navigate("/");
+    } catch (error: any) {
+      // console.log(error);
+      if (axios.isAxiosError(error) && error.response) {
+        alert(error.response.data);
+      } else {
+        console.error("An unexpected error occurred:", error);
+      }
+    }
+  };
+
   return (
     <div className="min-h-[90vh] bg-mine-shaft-950 font-['poppins'] overflow-hidden">
       <div className="w-[100vw] h-[100vh] flex ">
@@ -17,6 +65,9 @@ export const LoginPage = () => {
             withAsterisk
             label="Email"
             placeholder="Your email"
+            name="email"
+            value={loginData.email}
+            onChange={handleChange}
           />
 
           {/* Password Input */}
@@ -25,10 +76,13 @@ export const LoginPage = () => {
             leftSection={<MdLockOutline />}
             label="Password"
             placeholder="Password"
+            name="password"
+            value={loginData.password}
+            onChange={handleChange}
           />
 
           {/* Login Button */}
-          <Button autoContrast variant="filled">
+          <Button onClick={handleLoginSubmit} autoContrast variant="filled">
             Login
           </Button>
 
