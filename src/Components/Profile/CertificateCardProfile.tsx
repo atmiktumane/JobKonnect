@@ -1,4 +1,4 @@
-export const ProfileCertificationCard = (props: any) => {
+export const CertificateCardProfile = (props: any) => {
   return (
     <div className="flex justify-between">
       {/* Left */}
