@@ -25,6 +25,7 @@
     "@tiptap/pm": "^2.22.2",
     "@tiptap/react": "^2.22.2",
     "@tiptap/starter-kit": "^2.22.2",
+    "axios": "^1.10.0",
     "dayjs": "^1.11.13",
     "dompurify": "^3.2.6",
     "embla-carousel": "^8.6.0",
