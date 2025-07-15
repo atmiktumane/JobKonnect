@@ -4,40 +4,63 @@ import { useState } from "react";
 import { MdLockOutline, MdOutlineAlternateEmail } from "react-icons/md";
 import { TbAsset } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
+import { loginFormValidation } from "../Components/services/FormValidation";
 
 export const LoginPage = () => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
-  const [loginData, setLoginData] = useState({
+  // Initial value of input fields present in Login Form
+  const form = {
     email: "",
     password: "",
-  });
+  };
+
+  // State to manage : input fields data
+  const [loginData, setLoginData] = useState<{ [key: string]: string }>(form);
+
+  // State to manage : validation error in input fields
+  const [formError, setFormError] = useState<{ [key: string]: string }>(form);
 
   const navigate = useNavigate();
 
   // Save Login Data : onChange of input fields
-  const handleChange = (e: any) => {
+  const onChangeHandleData = (e: any) => {
     // console.log(e.target);
     const { name, value } = e.target;
-    setLoginData((prev) => ({ ...prev, [name]: value }));
+    setLoginData({ ...loginData, [name]: value });
+
+    setFormError({ ...formError, [name]: loginFormValidation(name, value) });
   };
 
   // Login API
-  const handleLoginSubmit = async (e: any) => {
+  const submitLoginForm = async (e: any) => {
     e.preventDefault();
 
-    try {
-      if (loginData.email === "" || loginData.password === "") {
-        alert("All fields are mandatory");
-        return;
-      }
+    // Check input validation onSubmit
+    let valid = true;
+    let newFormError: { [key: string]: string } = {};
 
+    for (let key in loginData) {
+      // console.log(key, " -- ", loginData[key]);
+      newFormError[key] = loginFormValidation(key, loginData[key]);
+
+      // if any input field is having validation error, then set valid = false
+      if (newFormError[key]) valid = false;
+    }
+
+    // Set validation input error
+    setFormError(newFormError);
+
+    // Validation failed, Don't proceed further
+    if (valid === false) return;
+
+    try {
       // Login API call
       await axios.post(`${apiUrl}/api/v1/users/login`, loginData);
 
       // console.log(response);
 
-      // Success Modal
+      // Show Success Modal
       alert("User login is successfull !");
 
       // Navigate to Home page
@@ -67,7 +90,8 @@ export const LoginPage = () => {
             placeholder="Your email"
             name="email"
             value={loginData.email}
-            onChange={handleChange}
+            onChange={onChangeHandleData}
+            error={formError.email}
           />
 
           {/* Password Input */}
@@ -78,11 +102,12 @@ export const LoginPage = () => {
             placeholder="Password"
             name="password"
             value={loginData.password}
-            onChange={handleChange}
+            onChange={onChangeHandleData}
+            error={formError.password}
           />
 
           {/* Login Button */}
-          <Button onClick={handleLoginSubmit} autoContrast variant="filled">
+          <Button onClick={submitLoginForm} autoContrast variant="filled">
             Login
           </Button>
 
