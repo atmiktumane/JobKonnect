@@ -12,6 +12,7 @@ import { TbAsset } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { signupFormValidation } from "../Components/services/FormValidation";
+import { notifications } from "@mantine/notifications";
 
 export const SignupPage = () => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
@@ -117,14 +118,26 @@ export const SignupPage = () => {
       // Signup API Call
       await axios.post(`${apiUrl}/api/v1/users/register`, data);
 
-      // Show Success Popup
-      alert("User is successfully registered !");
+      // Show Success Notification
+      notifications.show({
+        title: "User is successfully registered",
+        message: "Navigating to Login Page",
+      });
 
-      // Navigate to Login Page
-      navigate("/login");
+      // Navigate to Login page after 4 seconds
+      setTimeout(() => {
+        navigate("/login");
+      }, 4000);
     } catch (error: any) {
       if (axios.isAxiosError(error) && error.response) {
-        alert(error.response.data);
+        // alert(error.response.data);
+
+        // Show Error Notification
+        notifications.show({
+          color: "red.9",
+          title: "Error",
+          message: error.response.data,
+        });
       } else {
         console.error("An unexpected error occurred:", error);
       }

@@ -5,6 +5,7 @@ import { MdLockOutline, MdOutlineAlternateEmail } from "react-icons/md";
 import { TbAsset } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
 import { loginFormValidation } from "../Components/services/FormValidation";
+import { notifications } from "@mantine/notifications";
 
 export const LoginPage = () => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
@@ -32,7 +33,7 @@ export const LoginPage = () => {
     setFormError({ ...formError, [name]: loginFormValidation(name, value) });
   };
 
-  // Login API
+  // Login Form Submit
   const submitLoginForm = async (e: any) => {
     e.preventDefault();
 
@@ -58,17 +59,27 @@ export const LoginPage = () => {
       // Login API call
       await axios.post(`${apiUrl}/api/v1/users/login`, loginData);
 
-      // console.log(response);
+      // Show Success Notification
+      notifications.show({
+        title: "Login Successfull",
+        message: "Navigating to Home Page",
+      });
 
-      // Show Success Modal
-      alert("User login is successfull !");
-
-      // Navigate to Home page
-      navigate("/");
+      // Navigate to Home page after 4 seconds
+      setTimeout(() => {
+        navigate("/");
+      }, 4000);
     } catch (error: any) {
       // console.log(error);
       if (axios.isAxiosError(error) && error.response) {
-        alert(error.response.data);
+        // alert(error.response.data);
+
+        // Show Error Notification
+        notifications.show({
+          color: "red.9",
+          title: "Error",
+          message: error.response.data,
+        });
       } else {
         console.error("An unexpected error occurred:", error);
       }
