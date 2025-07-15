@@ -13,6 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { signupFormValidation } from "../Components/services/FormValidation";
 import { notifications } from "@mantine/notifications";
+import { FaArrowLeft } from "react-icons/fa";
 
 export const SignupPage = () => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
@@ -146,7 +147,18 @@ export const SignupPage = () => {
 
   return (
     <div className="min-h-[90vh] bg-mine-shaft-950 font-['poppins'] overflow-hidden">
-      <div className="w-[100vw] h-[100vh] flex ">
+      <div className="w-[100vw] h-[100vh] flex relative">
+        {/* Button : Navigate to Home Page */}
+        <Link to="/" className="absolute left-6 top-4 inline-block my-4">
+          <Button
+            leftSection={<FaArrowLeft />}
+            variant="light"
+            color="brightSun.4"
+          >
+            Home
+          </Button>
+        </Link>
+
         {/* Left */}
         <div className="w-1/2 h-full flex flex-col items-center justify-center gap-3 bg-mine-shaft-900 rounded-r-[200px]">
           {/* Logo */}
