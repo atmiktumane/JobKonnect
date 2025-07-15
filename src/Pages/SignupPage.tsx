@@ -11,31 +11,78 @@ import { MdLockOutline, MdOutlineAlternateEmail } from "react-icons/md";
 import { TbAsset } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { signupFormValidation } from "../Components/services/FormValidation";
 
 export const SignupPage = () => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
-  const [data, setData] = useState({
+
+  // Initial values of Signup form inputs
+  const form = {
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
     role: "APPLICANT",
-  });
+  };
 
+  // State to manage : data in input fields
+  const [data, setData] = useState<{ [key: string]: string }>(form);
+
+  // State to manage : validation errors in input fields
+  const [formError, setFormError] = useState<{ [key: string]: string }>(form);
+
+  // Navigation variable
   const navigate = useNavigate();
 
-  // console.log(data);
+  // console.log(formError);
 
   // Handle Data function -> save data onChange of input fields
-  const handleData = (e: any) => {
+  const onChangeHandleData = (e: any) => {
+    // Role input field
     if (typeof e === "string") {
       // For Mantine Radio.Group which returns value directly
-      setData((prevData) => ({
-        ...prevData,
-        role: e,
-      }));
-    } else {
-      const { name, value } = e.target;
-      setData((prevData) => ({ ...prevData, [name]: value }));
+      setData({ ...data, role: e });
+      return;
+    }
+
+    // Remaining Input fields
+    // const { name, value } = e.target;
+    let name = e.target.name;
+    let value = e.target.value;
+
+    setData({ ...data, [name]: value });
+
+    // Validation Error checks
+    setFormError({ ...formError, [name]: signupFormValidation(name, value) });
+
+    console.log(name);
+
+    // ConfirmPassword input field validation
+    if (name === "confirmPassword") {
+      if (data.password !== value) {
+        setFormError({
+          ...formError,
+          [name]: "Passwords does not match.",
+        });
+      } else {
+        setFormError({
+          ...formError,
+          [name]: "",
+        });
+      }
+    }
+
+    // Password input field validation
+    if (name === "password" && data.confirmPassword !== "") {
+      let err = "";
+      if (data.confirmPassword !== value) err = "Passwords does not match.";
+      else err = "";
+
+      setFormError({
+        ...formError,
+        [name]: signupFormValidation(name, value),
+        confirmPassword: err,
+      });
     }
   };
 
@@ -43,13 +90,30 @@ export const SignupPage = () => {
   const submitSignupForm = async (e: any) => {
     e.preventDefault();
 
-    try {
-      // mandatory validation
-      if (data.name === "" || data.email === "" || data.password === "") {
-        alert("Please fill mandatory fields !");
-        return;
-      }
+    // Check input validation onSubmit
+    let valid = true;
 
+    let newFormError: { [key: string]: string } = {};
+
+    for (let key in data) {
+      if (key === "role") continue;
+
+      if (key !== "confirmPassword")
+        newFormError[key] = signupFormValidation(key, data[key]);
+      else if (data[key] !== data["password"])
+        newFormError[key] = "Passwords does not match.";
+
+      // if any input field is having validation error, then set valid = false
+      if (newFormError[key]) valid = false;
+    }
+
+    // Set validation input error
+    setFormError(newFormError);
+
+    // Validation failed, Don't proceed further
+    if (valid === false) return;
+
+    try {
       // Signup API Call
       await axios.post(`${apiUrl}/api/v1/users/register`, data);
 
@@ -60,7 +124,7 @@ export const SignupPage = () => {
       navigate("/login");
     } catch (error: any) {
       if (axios.isAxiosError(error) && error.response) {
-        alert(error.response.data.message);
+        alert(error.response.data);
       } else {
         console.error("An unexpected error occurred:", error);
       }
@@ -96,7 +160,8 @@ export const SignupPage = () => {
             label="Full Name"
             placeholder="Your name"
             value={data.name}
-            onChange={handleData}
+            onChange={onChangeHandleData}
+            error={formError.name}
           />
 
           {/* Email Input */}
@@ -107,7 +172,8 @@ export const SignupPage = () => {
             label="Email"
             placeholder="Your email"
             value={data.email}
-            onChange={handleData}
+            onChange={onChangeHandleData}
+            error={formError.email}
           />
 
           {/* Password Input */}
@@ -118,21 +184,26 @@ export const SignupPage = () => {
             label="Password"
             placeholder="Password"
             value={data.password}
-            onChange={handleData}
+            onChange={onChangeHandleData}
+            error={formError.password}
           />
 
           {/* Confirm Password Input */}
           <PasswordInput
             withAsterisk
+            name="confirmPassword"
             leftSection={<MdLockOutline />}
             label="Confirm Password"
             placeholder="Confirm Password"
+            value={data.confirmPassword}
+            onChange={onChangeHandleData}
+            error={formError.confirmPassword}
           />
 
           {/* Role Radio Buttons */}
           <Radio.Group
             value={data.role}
-            onChange={handleData}
+            onChange={onChangeHandleData}
             name="favoriteFramework"
             label="You are ?"
           >
