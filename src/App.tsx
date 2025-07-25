@@ -63,7 +63,7 @@ const App = () => {
 
   return (
     <MantineProvider defaultColorScheme="dark" theme={theme}>
-      <Notifications position="top-center" zIndex={100} />
+      <Notifications position="top-center" zIndex={10000} />
       <Header />
 
       <Divider size="xs" />
