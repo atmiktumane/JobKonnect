@@ -10,11 +10,6 @@ import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { GrAttachment } from "react-icons/gr";
 import { Link, useNavigate } from "react-router-dom";
-import { Loader } from "../Components/Loader/Loader";
-import { useDispatch } from "react-redux";
-import { showLoader } from "../ReduxStore/loaderSlice";
-import { NotificationModal } from "../Components/Notification/NotificationModal";
-import { ShowCountdownNotification } from "../Components/Notification/ShowCountdownNotification";
 
 export const ApplyJobPage = () => {
   // State : to handle Preview Application
@@ -22,9 +17,6 @@ export const ApplyJobPage = () => {
 
   // State : to handle navigation
   const navigate = useNavigate();
-
-  //   dispatch
-  const dispatch = useDispatch();
 
   // Handle Preview Function
   const handlePreview = () => {
@@ -37,22 +29,10 @@ export const ApplyJobPage = () => {
 
   // Handle Submit Function
   const handleSubmit = () => {
-    // Show Loader
-    dispatch(showLoader());
-
-    // Show Normal Notification Modal
-    // dispatch(
-    //   showNotification({
-    //     message: "Redirecting to Find Jobs in 5 seconds...",
-    //     title: "Application Submitted!",
-    //     color: "teal",
-    //   })
-    // );
-
-    // Show Count Down Notification Modal, Redirect to "Find Jobs" Page in 5 seconds
-    ShowCountdownNotification(dispatch, 5, "Redirecting to Find Jobs", () =>
-      navigate("/find-job")
-    );
+    // Naviagte to "Find Job" Page after 3 seconds
+    setTimeout(() => {
+      navigate("/find-job");
+    }, 3000);
   };
 
   return (
@@ -199,10 +179,6 @@ export const ApplyJobPage = () => {
           </div>
         </div>
       </div>
-
-      <Loader />
-
-      <NotificationModal />
     </>
   );
 };
