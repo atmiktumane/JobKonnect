@@ -1,4 +1,9 @@
-import { Button, PasswordInput, TextInput } from "@mantine/core";
+import {
+  Button,
+  LoadingOverlay,
+  PasswordInput,
+  TextInput,
+} from "@mantine/core";
 import axios from "axios";
 import { useState } from "react";
 import { MdLockOutline, MdOutlineAlternateEmail } from "react-icons/md";
@@ -18,6 +23,7 @@ import { setUser } from "../Slices/UserSlice";
 export const LoginPage = () => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
+  // Redux Hook to update State
   const dispatch = useDispatch();
 
   // Initial value of input fields present in Login Form
@@ -34,6 +40,9 @@ export const LoginPage = () => {
 
   // Mantine ResetPassword Modal (Open/Close)
   const [opened, { open, close }] = useDisclosure(false);
+
+  // State : to manage Loader
+  const [loader, setLoader] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -68,6 +77,9 @@ export const LoginPage = () => {
     // Validation failed, Don't proceed further
     if (valid === false) return;
 
+    // Show Loader while API Calling
+    setLoader(true);
+
     try {
       // Login API call
       const response = await axios.post(
@@ -82,10 +94,18 @@ export const LoginPage = () => {
 
       // Navigate to Home page after 4 seconds
       setTimeout(() => {
+        // Hide Loader
+        setLoader(false);
+
+        // Save response data in redux
         dispatch(setUser(response.data));
+
+        // Navigate to Home Page
         navigate("/");
       }, 4000);
     } catch (error: any) {
+      // Hide Loader
+      setLoader(false);
       // console.log(error);
       if (axios.isAxiosError(error) && error.response) {
         // alert(error.response.data);
@@ -180,7 +200,16 @@ export const LoginPage = () => {
         </div>
       </div>
 
+      {/* Open ResetPassword Modal */}
       <ResetPassword opened={opened} close={close} />
+
+      {/* Loader */}
+      <LoadingOverlay
+        visible={loader}
+        zIndex={1000}
+        overlayProps={{ radius: "sm", blur: 2 }}
+        loaderProps={{ color: "brightSun.4", type: "bars" }}
+      />
     </>
   );
 };

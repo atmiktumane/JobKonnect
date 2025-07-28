@@ -8,10 +8,23 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { useState } from "react";
 import { LuSunMedium } from "react-icons/lu";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { removeUser } from "../../Slices/UserSlice";
 
 export const ProfileMenu = () => {
+  // Redux Hook : to update state
+  const dispatch = useDispatch();
+
+  // Redux Hook : to get value of that state (i.e., user)
+  const user = useSelector((state: any) => state.user);
+
   const [openMenuDropdown, setOpenMenuDropdown] = useState(false);
   const [themeChecked, setThemeChecked] = useState(false);
+
+  // Handle Logout Function
+  const handleLogout = () => {
+    dispatch(removeUser());
+  };
 
   return (
     <Menu
@@ -23,7 +36,7 @@ export const ProfileMenu = () => {
       {/* Profile */}
       <Menu.Target>
         <div className="flex items-center gap-2 cursor-pointer">
-          <p>Marshal</p>
+          <p>{user.name}</p>
           <Avatar src={ProfilePhoto} alt="ProfilePhoto" />
         </div>
       </Menu.Target>
@@ -58,7 +71,11 @@ export const ProfileMenu = () => {
 
         <Menu.Divider />
 
-        <Menu.Item color="red" leftSection={<IoLogOutOutline size={14} />}>
+        <Menu.Item
+          onClick={handleLogout}
+          color="red"
+          leftSection={<IoLogOutOutline size={14} />}
+        >
           Logout
         </Menu.Item>
       </Menu.Dropdown>

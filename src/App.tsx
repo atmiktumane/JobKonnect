@@ -6,7 +6,7 @@ import "@mantine/dates/styles.css";
 import "@mantine/notifications/styles.css";
 
 import HomePage from "./Pages/HomePage";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Header from "./Components/Header/Header";
 import { Footer } from "./Components/Footer/Footer";
 import { FindJobsPage } from "./Pages/FindJobsPage";
@@ -22,6 +22,7 @@ import { SignupPage } from "./Pages/SignupPage";
 import { LoginPage } from "./Pages/LoginPage";
 import { ProfilePage } from "./Pages/ProfilePage";
 import { Notifications } from "@mantine/notifications";
+import { useSelector } from "react-redux";
 
 const App = () => {
   // Mantine Theme Color
@@ -61,6 +62,9 @@ const App = () => {
     },
   });
 
+  // Redux hook : to get value of user state for conditional auth routing
+  const user = useSelector((state: any) => state.user);
+
   return (
     <MantineProvider defaultColorScheme="dark" theme={theme}>
       <Notifications position="top-center" zIndex={10000} />
@@ -79,8 +83,14 @@ const App = () => {
         <Route path="/posted-job" element={<PostedJobPage />} />
         <Route path="/job-history" element={<JobHistoryPage />} />
         <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/signup"
+          element={user ? <Navigate to="/" /> : <SignupPage />} // If User info is present, then Don't go to Signup Page
+        />
+        <Route
+          path="/login"
+          element={user ? <Navigate to="/" /> : <LoginPage />} // If User info is present, then Don't go to Login Page
+        />
         <Route path="*" element={<HomePage />} />
       </Routes>
 

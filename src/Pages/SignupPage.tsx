@@ -2,6 +2,7 @@ import {
   Button,
   Checkbox,
   Group,
+  LoadingOverlay,
   PasswordInput,
   Radio,
   TextInput,
@@ -35,6 +36,9 @@ export const SignupPage = () => {
 
   // State to manage : validation errors in input fields
   const [formError, setFormError] = useState<{ [key: string]: string }>(form);
+
+  // State : To manage Loader
+  const [loader, setLoader] = useState<boolean>(false);
 
   // Navigation variable
   const navigate = useNavigate();
@@ -118,6 +122,9 @@ export const SignupPage = () => {
     // Validation failed, Don't proceed further
     if (valid === false) return;
 
+    // Show Loader
+    setLoader(true);
+
     try {
       // Signup API Call
       await axios.post(`${apiUrl}/api/v1/users/register`, data);
@@ -130,9 +137,15 @@ export const SignupPage = () => {
 
       // Navigate to Login page after 4 seconds
       setTimeout(() => {
+        // Hide Loader
+        setLoader(false);
+
+        // Navigate to Login Page
         navigate("/login");
       }, 4000);
     } catch (error: any) {
+      // Hide Loader
+      setLoader(false);
       if (axios.isAxiosError(error) && error.response) {
         // alert(error.response.data);
 
@@ -145,137 +158,147 @@ export const SignupPage = () => {
   };
 
   return (
-    <div className="min-h-[90vh] bg-mine-shaft-950 font-['poppins'] overflow-hidden">
-      <div className="w-[100vw] h-[100vh] flex relative">
-        {/* Button : Navigate to Home Page */}
-        <Link to="/" className="absolute left-6 top-4 inline-block my-4">
-          <Button
-            leftSection={<FaArrowLeft />}
-            variant="light"
-            color="brightSun.4"
-          >
-            Home
-          </Button>
-        </Link>
-
-        {/* Left */}
-        <div className="w-1/2 h-full flex flex-col items-center justify-center gap-3 bg-mine-shaft-900 rounded-r-[200px]">
-          {/* Logo */}
-          <Link
-            to="/home"
-            className="flex items-center gap-1 text-bright-sun-400 cursor-pointer"
-          >
-            <TbAsset className="h-14 w-14" />
-            <p className="text-5xl font-bold">JobKonnect</p>
+    <>
+      <div className="min-h-[90vh] bg-mine-shaft-950 font-['poppins'] overflow-hidden">
+        <div className="w-[100vw] h-[100vh] flex relative">
+          {/* Button : Navigate to Home Page */}
+          <Link to="/" className="absolute left-6 top-4 inline-block my-4">
+            <Button
+              leftSection={<FaArrowLeft />}
+              variant="light"
+              color="brightSun.4"
+            >
+              Home
+            </Button>
           </Link>
 
-          {/* Description */}
-          <p className="text-lg font-semibold">Find the Job, Made for You</p>
-        </div>
+          {/* Left */}
+          <div className="w-1/2 h-full flex flex-col items-center justify-center gap-3 bg-mine-shaft-900 rounded-r-[200px]">
+            {/* Logo */}
+            <Link
+              to="/home"
+              className="flex items-center gap-1 text-bright-sun-400 cursor-pointer"
+            >
+              <TbAsset className="h-14 w-14" />
+              <p className="text-5xl font-bold">JobKonnect</p>
+            </Link>
 
-        {/* Right */}
-        <div className="w-1/2 flex flex-col justify-center px-20 gap-3">
-          <h6 className="text-lg font-semibold">Create Account</h6>
+            {/* Description */}
+            <p className="text-lg font-semibold">Find the Job, Made for You</p>
+          </div>
 
-          {/* Name Input */}
-          <TextInput
-            withAsterisk
-            name="name"
-            label="Full Name"
-            placeholder="Your name"
-            value={data.name}
-            onChange={onChangeHandleData}
-            error={formError.name}
-          />
+          {/* Right */}
+          <div className="w-1/2 flex flex-col justify-center px-20 gap-3">
+            <h6 className="text-lg font-semibold">Create Account</h6>
 
-          {/* Email Input */}
-          <TextInput
-            leftSection={<MdOutlineAlternateEmail />}
-            withAsterisk
-            name="email"
-            label="Email"
-            placeholder="Your email"
-            value={data.email}
-            onChange={onChangeHandleData}
-            error={formError.email}
-          />
+            {/* Name Input */}
+            <TextInput
+              withAsterisk
+              name="name"
+              label="Full Name"
+              placeholder="Your name"
+              value={data.name}
+              onChange={onChangeHandleData}
+              error={formError.name}
+            />
 
-          {/* Password Input */}
-          <PasswordInput
-            withAsterisk
-            name="password"
-            leftSection={<MdLockOutline />}
-            label="Password"
-            placeholder="Password"
-            value={data.password}
-            onChange={onChangeHandleData}
-            error={formError.password}
-          />
+            {/* Email Input */}
+            <TextInput
+              leftSection={<MdOutlineAlternateEmail />}
+              withAsterisk
+              name="email"
+              label="Email"
+              placeholder="Your email"
+              value={data.email}
+              onChange={onChangeHandleData}
+              error={formError.email}
+            />
 
-          {/* Confirm Password Input */}
-          <PasswordInput
-            withAsterisk
-            name="confirmPassword"
-            leftSection={<MdLockOutline />}
-            label="Confirm Password"
-            placeholder="Confirm Password"
-            value={data.confirmPassword}
-            onChange={onChangeHandleData}
-            error={formError.confirmPassword}
-          />
+            {/* Password Input */}
+            <PasswordInput
+              withAsterisk
+              name="password"
+              leftSection={<MdLockOutline />}
+              label="Password"
+              placeholder="Password"
+              value={data.password}
+              onChange={onChangeHandleData}
+              error={formError.password}
+            />
 
-          {/* Role Radio Buttons */}
-          <Radio.Group
-            value={data.role}
-            onChange={onChangeHandleData}
-            name="favoriteFramework"
-            label="You are ?"
-          >
-            <Group>
-              <Radio
-                value="APPLICANT"
-                label="Applicant"
-                autoContrast
-                className="px-6 py-3 border border-mine-shaft-800 hover:bg-mine-shaft-500/10 rounded-md has-[:checked]:bg-bright-sun-300/10 has-[:checked]:border-bright-sun-400/40"
-              />
-              <Radio
-                value="EMPLOYER"
-                label="Employer"
-                autoContrast
-                className="px-6 py-3 border border-mine-shaft-800 hover:bg-mine-shaft-500/10 rounded-md has-[:checked]:bg-bright-sun-300/10 has-[:checked]:border-bright-sun-400/40"
-              />
-            </Group>
-          </Radio.Group>
+            {/* Confirm Password Input */}
+            <PasswordInput
+              withAsterisk
+              name="confirmPassword"
+              leftSection={<MdLockOutline />}
+              label="Confirm Password"
+              placeholder="Confirm Password"
+              value={data.confirmPassword}
+              onChange={onChangeHandleData}
+              error={formError.confirmPassword}
+            />
 
-          {/* Agree to Terms & Conditions */}
-          <Checkbox
-            autoContrast
-            defaultChecked={false}
-            label={
-              <>
-                I accept to
-                <a href="" className="text-bright-sun-400">
-                  {" "}
-                  terms & conditions
-                </a>
-              </>
-            }
-          />
+            {/* Role Radio Buttons */}
+            <Radio.Group
+              value={data.role}
+              onChange={onChangeHandleData}
+              name="favoriteFramework"
+              label="You are ?"
+            >
+              <Group>
+                <Radio
+                  value="APPLICANT"
+                  label="Applicant"
+                  autoContrast
+                  className="px-6 py-3 border border-mine-shaft-800 hover:bg-mine-shaft-500/10 rounded-md has-[:checked]:bg-bright-sun-300/10 has-[:checked]:border-bright-sun-400/40"
+                />
+                <Radio
+                  value="EMPLOYER"
+                  label="Employer"
+                  autoContrast
+                  className="px-6 py-3 border border-mine-shaft-800 hover:bg-mine-shaft-500/10 rounded-md has-[:checked]:bg-bright-sun-300/10 has-[:checked]:border-bright-sun-400/40"
+                />
+              </Group>
+            </Radio.Group>
 
-          {/* Signup Button */}
-          <Button onClick={submitSignupForm} autoContrast variant="filled">
-            Sign Up
-          </Button>
+            {/* Agree to Terms & Conditions */}
+            <Checkbox
+              autoContrast
+              defaultChecked={false}
+              label={
+                <>
+                  I accept to
+                  <a href="" className="text-bright-sun-400">
+                    {" "}
+                    terms & conditions
+                  </a>
+                </>
+              }
+            />
 
-          {/* Login  */}
-          <p className="text-center">
-            Already have an account ?{" "}
-            <a href="/login" className="text-bright-sun-400 hover:underline">
-              Login
-            </a>
-          </p>
+            {/* Signup Button */}
+            <Button onClick={submitSignupForm} autoContrast variant="filled">
+              Sign Up
+            </Button>
+
+            {/* Login  */}
+            <p className="text-center">
+              Already have an account ?{" "}
+              <a href="/login" className="text-bright-sun-400 hover:underline">
+                Login
+              </a>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Loader */}
+      <LoadingOverlay
+        visible={loader}
+        zIndex={1000}
+        overlayProps={{ radius: "sm", blur: 2 }}
+        loaderProps={{ color: "brightSun.4", type: "bars" }}
+      />
+    </>
   );
 };
