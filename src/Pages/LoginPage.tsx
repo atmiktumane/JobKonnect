@@ -12,9 +12,13 @@ import {
   errorNotification,
   successNotification,
 } from "../Components/services/NotificationService";
+import { useDispatch } from "react-redux";
+import { setUser } from "../Slices/UserSlice";
 
 export const LoginPage = () => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
+  const dispatch = useDispatch();
 
   // Initial value of input fields present in Login Form
   const form = {
@@ -66,13 +70,19 @@ export const LoginPage = () => {
 
     try {
       // Login API call
-      await axios.post(`${apiUrl}/api/v1/users/login`, loginData);
+      const response = await axios.post(
+        `${apiUrl}/api/v1/users/login`,
+        loginData
+      );
+
+      console.log("Login response : ", response.data);
 
       // Show Success Notification
       successNotification("Login Successfull", "Navigating to Home Page");
 
       // Navigate to Home page after 4 seconds
       setTimeout(() => {
+        dispatch(setUser(response.data));
         navigate("/");
       }, 4000);
     } catch (error: any) {
