@@ -4,10 +4,13 @@ import { IoBriefcaseOutline } from "react-icons/io5";
 import { ExperienceCardProfile } from "./ExperienceCardProfile";
 import { CertificateCardProfile } from "./CertificateCardProfile";
 import { MdOutlineModeEditOutline } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaRegSave } from "react-icons/fa";
 import { SelectInputProfile } from "./SelectInputProfile";
 import { fields } from "../../Data/ProfileData";
+import { useSelector } from "react-redux";
+import { getProfileByIdAPI } from "../services/ProfileService";
+import { errorNotification } from "../services/NotificationService";
 
 export const UserProfile = (props: any) => {
   // State : to edit 5 sections (User Details, About section, Skills, Experience, Certifications) present in Profile Page
@@ -25,6 +28,9 @@ export const UserProfile = (props: any) => {
   // State : for Skills tag
   const [skills, setSkills] = useState(props.skills.map((item: any) => item));
 
+  // Get User info from Redux
+  const user = useSelector((state: any) => state.user);
+
   // Handle Edit Function : to handle edit of sections
   const handleEdit = (index: number) => {
     const newEdit = [...edit];
@@ -32,7 +38,23 @@ export const UserProfile = (props: any) => {
     setEdit(newEdit);
   };
 
-  // console.log(skills);
+  // console.log(user);
+
+  // GET Profile API Function
+  const fetchProfileFunction = async () => {
+    try {
+      const response = await getProfileByIdAPI(user.profileId);
+      console.log(response);
+    } catch (error: any) {
+      errorNotification("Failed to fetch profile", error.response?.data);
+    }
+  };
+
+  // Profile PageLoad workflow
+  useEffect(() => {
+    // ******* API Call *******
+    fetchProfileFunction();
+  }, []);
 
   return (
     <div className="w-3/4 flex flex-col gap-8 mx-auto py-10">
