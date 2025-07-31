@@ -2,7 +2,7 @@ import { Combobox, InputBase, ScrollArea, useCombobox } from "@mantine/core";
 import { useEffect, useState } from "react";
 
 export const SelectInputProfile = (props: any) => {
-  console.log(props);
+  // console.log(props);
 
   const [data, setData] = useState<string[]>([]);
   const [value, setValue] = useState<string | null>(null);
@@ -12,7 +12,7 @@ export const SelectInputProfile = (props: any) => {
   const filteredOptions = exactOptionMatch
     ? data
     : data.filter((item) =>
-        item.toLowerCase().includes(search.toLowerCase().trim())
+        item?.toLowerCase().includes(search?.toLowerCase().trim())
       );
 
   const options = filteredOptions.map((item) => (
@@ -23,8 +23,8 @@ export const SelectInputProfile = (props: any) => {
 
   useEffect(() => {
     setData(props.options);
-    setValue(props.value);
-    setSearch(props.value);
+    setValue(props.form.getInputProps(props.name).value);
+    setSearch(props.form.getInputProps(props.name).value);
   }, []);
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
@@ -38,9 +38,11 @@ export const SelectInputProfile = (props: any) => {
         if (val === "$create") {
           setData((current) => [...current, search]);
           setValue(search);
+          props.form.setFieldValue(props.name, search);
         } else {
           setValue(val);
           setSearch(val);
+          props.form.setFieldValue(props.name, val);
         }
 
         combobox.closeDropdown();
@@ -48,6 +50,7 @@ export const SelectInputProfile = (props: any) => {
     >
       <Combobox.Target>
         <InputBase
+          {...props.form.getInputProps(props.name)}
           className="[&_input]:font-medium"
           label={props.label}
           withAsterisk
@@ -74,7 +77,7 @@ export const SelectInputProfile = (props: any) => {
         <Combobox.Options>
           <ScrollArea.Autosize mah={150} type="scroll">
             {options}
-            {!exactOptionMatch && search.trim().length > 0 && (
+            {!exactOptionMatch && search?.trim()?.length > 0 && (
               <Combobox.Option value="$create">
                 + Create {search}
               </Combobox.Option>

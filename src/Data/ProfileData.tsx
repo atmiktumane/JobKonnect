@@ -15,7 +15,6 @@ const fields = [
       "Content Writer",
       "Customer Support",
     ],
-    value: "Software Engineer",
     leftSection: IoBriefcaseOutline,
   },
   {
@@ -32,7 +31,6 @@ const fields = [
       "Apple",
       "Spotify",
     ],
-    value: "Google",
     leftSection: IoBriefcaseOutline,
   },
   {
@@ -48,7 +46,6 @@ const fields = [
       "Sydney",
       "Toronto",
     ],
-    value: "New York, United States",
     leftSection: LuMapPin,
   },
 ];

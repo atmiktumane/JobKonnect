@@ -1,6 +1,7 @@
 import { Button } from "@mantine/core";
 import { ExperienceInput } from "./ExperienceInput";
 import { useState } from "react";
+import { formatDate } from "../services/Utilities";
 
 export const ExperienceCardProfile = (props: any) => {
   // State : for Edit Experience
@@ -36,7 +37,7 @@ export const ExperienceCardProfile = (props: any) => {
 
             {/* Right */}
             <p className="text-sm">
-              {props.startDate} - {props.endDate}
+              {formatDate(props.startDate)} - {formatDate(props.endDate)}
             </p>
           </div>
 

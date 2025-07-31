@@ -1,16 +1,14 @@
 import { ActionIcon, Divider, TagsInput, Textarea } from "@mantine/core";
-import { GrLocation } from "react-icons/gr";
-import { IoBriefcaseOutline } from "react-icons/io5";
 import { ExperienceCardProfile } from "./ExperienceCardProfile";
 import { CertificateCardProfile } from "./CertificateCardProfile";
 import { MdOutlineModeEditOutline } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { FaRegSave } from "react-icons/fa";
-import { SelectInputProfile } from "./SelectInputProfile";
-import { fields } from "../../Data/ProfileData";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getProfileByIdAPI } from "../services/ProfileService";
 import { errorNotification } from "../services/NotificationService";
+import { Info } from "./Info";
+import { setProfile } from "../../Slices/ProfileSlice";
 
 export const UserProfile = (props: any) => {
   // State : to edit 5 sections (User Details, About section, Skills, Experience, Certifications) present in Profile Page
@@ -31,6 +29,11 @@ export const UserProfile = (props: any) => {
   // Get User info from Redux
   const user = useSelector((state: any) => state.user);
 
+  // Get Profile info from Redux
+  const profile = useSelector((state: any) => state.profile);
+
+  const dispatch = useDispatch();
+
   // Handle Edit Function : to handle edit of sections
   const handleEdit = (index: number) => {
     const newEdit = [...edit];
@@ -38,13 +41,13 @@ export const UserProfile = (props: any) => {
     setEdit(newEdit);
   };
 
-  // console.log(user);
-
   // GET Profile API Function
   const fetchProfileFunction = async () => {
     try {
       const response = await getProfileByIdAPI(user.profileId);
-      console.log(response);
+
+      // Update Redux state
+      dispatch(setProfile(response));
     } catch (error: any) {
       errorNotification("Failed to fetch profile", error.response?.data);
     }
@@ -75,50 +78,7 @@ export const UserProfile = (props: any) => {
       </div>
 
       {/* Row 2 - User Details */}
-      <div className="flex flex-col gap-3">
-        {/* row 1 */}
-        <div className="flex justify-between">
-          {/* Col 1 - Title */}
-          <h4 className="text-xl font-semibold">{props.name}</h4>
-
-          {/* Col 2 (Condition) - Edit + Save Button */}
-          <ActionIcon
-            onClick={() => handleEdit(0)}
-            variant="light"
-            aria-label="Settings"
-          >
-            {edit[0] ? (
-              <FaRegSave className="w-5 h-5 text-bright-sun-400" />
-            ) : (
-              <MdOutlineModeEditOutline className="w-5 h-5 text-bright-sun-400" />
-            )}
-          </ActionIcon>
-        </div>
-
-        {/* row 2 : Edit + Preview Details */}
-        {edit[0] ? (
-          // Edit User Details - Input Fields
-          <div className="flex flex-col gap-5">
-            {/* Row 1 */}
-            <div className="flex gap-10 [&>*]:w-1/2 ">
-              <SelectInputProfile {...fields[0]} />
-              <SelectInputProfile {...fields[1]} />
-            </div>
-            {/* Row 2 */}
-            <SelectInputProfile {...fields[2]} />
-          </div>
-        ) : (
-          // Show User Details
-          <div>
-            <div className="flex items-center gap-1.5 font-medium">
-              <IoBriefcaseOutline /> {props.role} &bull; {props.company}
-            </div>
-            <div className="flex items-center gap-1.5 text-md text-mine-shaft-300">
-              <GrLocation /> {props.location}
-            </div>
-          </div>
-        )}
-      </div>
+      <Info />
 
       <Divider size="sm" />
 
@@ -149,11 +109,11 @@ export const UserProfile = (props: any) => {
             autosize
             minRows={4}
             placeholder="Enter about yourself..."
-            value={aboutValue}
+            value={profile?.about}
             onChange={(e) => setAboutValue(e.target.value)}
           />
         ) : (
-          <p className="text-sm">{aboutValue}</p>
+          <p className="text-sm">{profile?.about}</p>
         )}
       </div>
 
@@ -184,7 +144,7 @@ export const UserProfile = (props: any) => {
         {edit[2] ? (
           // Edit Skills
           <TagsInput
-            value={skills}
+            value={profile?.skills}
             onChange={setSkills}
             placeholder="Enter Skills"
             splitChars={[",", "|"]}
@@ -192,7 +152,7 @@ export const UserProfile = (props: any) => {
         ) : (
           // Preview Skills
           <div className="flex flex-wrap gap-2 text-xs">
-            {skills.map((skill: string, index: number) => (
+            {profile?.skills?.map((skill: string, index: number) => (
               <div
                 key={index}
                 className="px-2 py-1 bg-bright-sun-400/15 text-bright-sun-400 font-medium rounded-full"
@@ -229,7 +189,7 @@ export const UserProfile = (props: any) => {
 
         {/* row 2 (condition) - Edit + Preview Skills Tag */}
         <div className="flex flex-col gap-10">
-          {props.experiences.map((experience: any, index: number) => (
+          {profile?.experiences?.map((experience: any, index: number) => (
             <ExperienceCardProfile
               save={() => handleEdit(3)}
               key={index}
@@ -247,7 +207,7 @@ export const UserProfile = (props: any) => {
         <h4 className="text-xl font-semibold mb-5">Certifications</h4>
 
         <div className="flex flex-col gap-8">
-          {props.certifications.map((certification: any, index: number) => (
+          {profile?.certifications?.map((certification: any, index: number) => (
             <CertificateCardProfile key={index} {...certification} />
           ))}
         </div>
