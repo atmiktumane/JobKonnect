@@ -9,6 +9,7 @@ import { getProfileByIdAPI } from "../services/ProfileService";
 import { errorNotification } from "../services/NotificationService";
 import { Info } from "./Info";
 import { setProfile } from "../../Slices/ProfileSlice";
+import { About } from "./About";
 
 export const UserProfile = (props: any) => {
   // State : to edit 5 sections (User Details, About section, Skills, Experience, Certifications) present in Profile Page
@@ -19,9 +20,6 @@ export const UserProfile = (props: any) => {
     false,
     false,
   ]);
-
-  // State : for aboutValue in About Section
-  const [aboutValue, setAboutValue] = useState<string>(props.about);
 
   // State : for Skills tag
   const [skills, setSkills] = useState(props.skills.map((item: any) => item));
@@ -83,39 +81,7 @@ export const UserProfile = (props: any) => {
       <Divider size="sm" />
 
       {/* Row 3 - About */}
-      <div className="flex flex-col gap-5">
-        {/* Title + Action Buttons */}
-        <div className="flex justify-between">
-          {/* Col 1 - Title */}
-          <h4 className="text-xl font-semibold">About</h4>
-
-          {/* Col 2 (Condition) - Edit + Save Button */}
-          <ActionIcon
-            onClick={() => handleEdit(1)}
-            variant="light"
-            aria-label="Settings"
-          >
-            {edit[1] ? (
-              <FaRegSave className="w-5 h-5 text-bright-sun-400" />
-            ) : (
-              <MdOutlineModeEditOutline className="w-5 h-5 text-bright-sun-400" />
-            )}
-          </ActionIcon>
-        </div>
-
-        {/* Content (Condition) : Edit + Show About Section */}
-        {edit[1] ? (
-          <Textarea
-            autosize
-            minRows={4}
-            placeholder="Enter about yourself..."
-            value={profile?.about}
-            onChange={(e) => setAboutValue(e.target.value)}
-          />
-        ) : (
-          <p className="text-sm">{profile?.about}</p>
-        )}
-      </div>
+      <About />
 
       <Divider size="sm" />
 

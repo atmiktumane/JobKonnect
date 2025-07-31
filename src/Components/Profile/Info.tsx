@@ -1,5 +1,5 @@
 import { ActionIcon } from "@mantine/core";
-import { FaRegSave } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa";
 import { MdOutlineModeEditOutline } from "react-icons/md";
 import { GrLocation } from "react-icons/gr";
 import { IoBriefcaseOutline } from "react-icons/io5";
@@ -10,8 +10,10 @@ import { useForm } from "@mantine/form";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../../Slices/ProfileSlice";
 import { successNotification } from "../services/NotificationService";
+import { CgClose } from "react-icons/cg";
 
 export const Info = () => {
+  // State : to edit "User Details"
   const [edit, setEdit] = useState<boolean>(false);
 
   // Get User info from Redux
@@ -20,6 +22,7 @@ export const Info = () => {
   // Get Profile info from Redux
   const profile = useSelector((state: any) => state.profile);
 
+  // redux hook : Updates Redux state
   const dispatch = useDispatch();
 
   const form = useForm({
@@ -38,16 +41,20 @@ export const Info = () => {
     } else {
       setEdit(false);
       //   console.log("Form Valeus : ", form.getValues());
-
-      let updatedProfile = { ...profile, ...form.getValues() };
-      //   console.log("Form Valeus : ", updatedProfile);
-
-      // Redux - update profile api
-      dispatch(changeProfile(updatedProfile));
-
-      // Show Success Notification
-      successNotification("Success", "Profile updated successfully.");
     }
+  };
+
+  const handleSave = () => {
+    let updatedProfile = { ...profile, ...form.getValues() };
+    //   console.log("Form Valeus : ", updatedProfile);
+
+    // Redux - update profile api
+    dispatch(changeProfile(updatedProfile));
+
+    // Show Success Notification
+    successNotification("Success", "Profile updated successfully.");
+
+    setEdit(false);
   };
 
   return (
@@ -59,17 +66,27 @@ export const Info = () => {
           <h4 className="text-xl font-semibold">{user.name}</h4>
 
           {/* Col 2 (Condition) - Edit + Save Button */}
-          <ActionIcon
-            onClick={handleClick}
-            variant="light"
-            aria-label="Settings"
-          >
-            {edit ? (
-              <FaRegSave className="w-5 h-5 text-bright-sun-400" />
-            ) : (
-              <MdOutlineModeEditOutline className="w-5 h-5 text-bright-sun-400" />
+          <div className="flex items-center gap-2">
+            {/* Save Button */}
+            {edit && (
+              <ActionIcon onClick={handleSave} variant="light" color="green.6">
+                <FaCheck className="w-4 h-4 text-green-400" />
+              </ActionIcon>
             )}
-          </ActionIcon>
+
+            {/* Edit or Cancel Button */}
+            <ActionIcon
+              onClick={handleClick}
+              variant="light"
+              color={edit ? "red.6" : ""}
+            >
+              {edit ? (
+                <CgClose className="w-5 h-5 text-red-500" />
+              ) : (
+                <MdOutlineModeEditOutline className="w-5 h-5 text-bright-sun-400" />
+              )}
+            </ActionIcon>
+          </div>
         </div>
 
         {/* row 2 : Edit + Preview Details */}
