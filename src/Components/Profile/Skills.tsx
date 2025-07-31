@@ -1,53 +1,54 @@
-import { ActionIcon, Textarea } from "@mantine/core";
+import { ActionIcon, TagsInput } from "@mantine/core";
 import { useState } from "react";
-import { CgClose } from "react-icons/cg";
 import { FaCheck } from "react-icons/fa";
 import { MdOutlineModeEditOutline } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../../Slices/ProfileSlice";
 import { successNotification } from "../services/NotificationService";
+import { CgClose } from "react-icons/cg";
 
-export const About = () => {
-  // State : to manage "About" data
-  const [about, setAbout] = useState<string>("");
+export const Skills = () => {
+  // State : to manage skills data
+  const [skills, setSkills] = useState<string[]>([]);
 
-  // State : to edit "About" section
+  // State : to edit "Skills" section
   const [edit, setEdit] = useState<boolean>(false);
 
   // Get Profile info from Redux
   const profile = useSelector((state: any) => state.profile);
 
-  // Redux Hook : Updates Redux state
+  // redux hook : Updates Redux state
   const dispatch = useDispatch();
 
   const handleClick = () => {
     if (!edit) {
       setEdit(true);
-      setAbout(profile.about);
+      setSkills(profile.skills);
     } else {
       setEdit(false);
+      //   console.log("Form Valeus : ", form.getValues());
     }
   };
 
   // Handle Save : to save about data in DB through redux
   const handleSave = () => {
-    let updatedProfile = { ...profile, about: about };
+    let updatedProfile = { ...profile, skills: skills };
 
     // Redux - update profile api
     dispatch(changeProfile(updatedProfile));
 
     // Show Success Notification
-    successNotification("Success", "About section updated successfully.");
+    successNotification("Success", "Skills section updated successfully.");
 
     setEdit(false);
   };
 
   return (
     <div className="flex flex-col gap-5">
-      {/* Title + Action Buttons */}
+      {/* row 1 - Title + Action Buttons */}
       <div className="flex justify-between">
         {/* Col 1 - Title */}
-        <h4 className="text-xl font-semibold">About</h4>
+        <h4 className="text-xl font-semibold">Skills</h4>
 
         {/* Col 2 (Condition) - Edit + Save Button */}
         <div className="flex items-center gap-2">
@@ -73,17 +74,27 @@ export const About = () => {
         </div>
       </div>
 
-      {/* Content (Condition) : Edit + Show About Section */}
+      {/* row 2 (condition) - Edit + Preview Skills Tag */}
       {edit ? (
-        <Textarea
-          autosize
-          minRows={4}
-          placeholder="Enter about yourself..."
-          value={about}
-          onChange={(e) => setAbout(e.target.value)}
+        // Edit Skills
+        <TagsInput
+          value={skills}
+          onChange={setSkills}
+          placeholder="Enter Skills"
+          splitChars={[",", "|"]}
         />
       ) : (
-        <p className="text-sm">{profile?.about}</p>
+        // Preview Skills
+        <div className="flex flex-wrap gap-2 text-xs">
+          {profile?.skills?.map((skill: string, index: number) => (
+            <div
+              key={index}
+              className="px-2 py-1 bg-bright-sun-400/15 text-bright-sun-400 font-medium rounded-full"
+            >
+              {skill}
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

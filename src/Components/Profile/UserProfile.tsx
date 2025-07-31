@@ -1,4 +1,4 @@
-import { ActionIcon, Divider, TagsInput, Textarea } from "@mantine/core";
+import { ActionIcon, Divider } from "@mantine/core";
 import { ExperienceCardProfile } from "./ExperienceCardProfile";
 import { CertificateCardProfile } from "./CertificateCardProfile";
 import { MdOutlineModeEditOutline } from "react-icons/md";
@@ -10,8 +10,9 @@ import { errorNotification } from "../services/NotificationService";
 import { Info } from "./Info";
 import { setProfile } from "../../Slices/ProfileSlice";
 import { About } from "./About";
+import { Skills } from "./Skills";
 
-export const UserProfile = (props: any) => {
+export const UserProfile = () => {
   // State : to edit 5 sections (User Details, About section, Skills, Experience, Certifications) present in Profile Page
   const [edit, setEdit] = useState<boolean[]>([
     false,
@@ -20,9 +21,6 @@ export const UserProfile = (props: any) => {
     false,
     false,
   ]);
-
-  // State : for Skills tag
-  const [skills, setSkills] = useState(props.skills.map((item: any) => item));
 
   // Get User info from Redux
   const user = useSelector((state: any) => state.user);
@@ -86,49 +84,7 @@ export const UserProfile = (props: any) => {
       <Divider size="sm" />
 
       {/* Row 4 - Skills */}
-      <div className="flex flex-col gap-5">
-        {/* row 1 - Title + Action Buttons */}
-        <div className="flex justify-between">
-          {/* Col 1 - Title */}
-          <h4 className="text-xl font-semibold">Skills</h4>
-
-          {/* Col 2 (Condition) - Edit + Save Button */}
-          <ActionIcon
-            onClick={() => handleEdit(2)}
-            variant="light"
-            aria-label="Settings"
-          >
-            {edit[2] ? (
-              <FaRegSave className="w-5 h-5 text-bright-sun-400" />
-            ) : (
-              <MdOutlineModeEditOutline className="w-5 h-5 text-bright-sun-400" />
-            )}
-          </ActionIcon>
-        </div>
-
-        {/* row 2 (condition) - Edit + Preview Skills Tag */}
-        {edit[2] ? (
-          // Edit Skills
-          <TagsInput
-            value={profile?.skills}
-            onChange={setSkills}
-            placeholder="Enter Skills"
-            splitChars={[",", "|"]}
-          />
-        ) : (
-          // Preview Skills
-          <div className="flex flex-wrap gap-2 text-xs">
-            {profile?.skills?.map((skill: string, index: number) => (
-              <div
-                key={index}
-                className="px-2 py-1 bg-bright-sun-400/15 text-bright-sun-400 font-medium rounded-full"
-              >
-                {skill}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+      <Skills />
 
       <Divider size="sm" />
 
