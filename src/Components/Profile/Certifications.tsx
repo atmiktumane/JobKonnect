@@ -1,17 +1,17 @@
-import { ActionIcon } from "@mantine/core";
-import { useState } from "react";
-import { FaPlus } from "react-icons/fa";
-import { MdOutlineModeEditOutline } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { ExperienceCardProfile } from "./ExperienceCardProfile";
+import { CertificateCardProfile } from "./CertificateCardProfile";
+import { ActionIcon } from "@mantine/core";
+import { FaPlus } from "react-icons/fa";
 import { CgClose } from "react-icons/cg";
-import { ExperienceInput } from "./ExperienceInput";
+import { MdOutlineModeEditOutline } from "react-icons/md";
+import { useState } from "react";
+import { CertificateInput } from "./CertificateInput";
 
-export const Experiences = () => {
-  // State : to add Experience
-  const [addExp, setAddExp] = useState<boolean>(false);
+export const Certifications = () => {
+  // State : to add Certificate
+  const [addCert, setAddCert] = useState<boolean>(false);
 
-  // State : to edit "Experiences" section
+  // State : to edit "Certificates" section
   const [edit, setEdit] = useState<boolean>(false);
 
   // Get Profile info from Redux
@@ -26,12 +26,12 @@ export const Experiences = () => {
       {/* row 1 - Title + Action Buttons */}
       <div className="flex justify-between items-start">
         {/* Col 1 - Title */}
-        <h4 className="text-xl font-semibold mb-5">Experience</h4>
+        <h4 className="text-xl font-semibold mb-5">Certifications</h4>
 
         {/* Col 2 - Add Experience Button */}
         <div className="flex items-center gap-2">
           <ActionIcon
-            onClick={() => setAddExp(true)}
+            onClick={() => setAddCert(true)}
             variant="light"
             aria-label="Settings"
           >
@@ -56,16 +56,16 @@ export const Experiences = () => {
         </div>
       </div>
 
-      {/* row 2 (condition) - Add + Edit + Delete Experiences */}
-      <div className="flex flex-col gap-10">
-        {addExp && <ExperienceInput add setEdit={setAddExp} />}
+      {/* row 2 (condition) - Add + Edit + Delete Certificates */}
+      <div className="flex flex-col gap-8">
+        {addCert && <CertificateInput add setEdit={setAddCert} />}
 
-        {profile?.experiences?.map((exp: any, index: number) => (
-          <ExperienceCardProfile
+        {profile?.certifications?.map((cert: any, index: number) => (
+          <CertificateCardProfile
             key={index}
             index={index}
             edit={edit}
-            {...exp}
+            {...cert}
           />
         ))}
       </div>

@@ -1,5 +1,4 @@
 import { Divider } from "@mantine/core";
-import { CertificateCardProfile } from "./CertificateCardProfile";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfileByIdAPI } from "../services/ProfileService";
@@ -9,13 +8,11 @@ import { setProfile } from "../../Slices/ProfileSlice";
 import { About } from "./About";
 import { Skills } from "./Skills";
 import { Experiences } from "./Experiences";
+import { Certifications } from "./Certifications";
 
 export const UserProfile = () => {
   // Get User info from Redux
   const user = useSelector((state: any) => state.user);
-
-  // Get Profile info from Redux
-  const profile = useSelector((state: any) => state.profile);
 
   const dispatch = useDispatch();
 
@@ -76,15 +73,7 @@ export const UserProfile = () => {
       <Divider size="sm" />
 
       {/* Row 6 - Certifications */}
-      <div>
-        <h4 className="text-xl font-semibold mb-5">Certifications</h4>
-
-        <div className="flex flex-col gap-8">
-          {profile?.certifications?.map((certification: any, index: number) => (
-            <CertificateCardProfile key={index} {...certification} />
-          ))}
-        </div>
-      </div>
+      <Certifications />
     </div>
   );
 };
