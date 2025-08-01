@@ -1,38 +1,47 @@
-import { Divider } from "@mantine/core";
-import { useEffect } from "react";
+import { Avatar, Divider, FileInput, Overlay } from "@mantine/core";
 import { useDispatch, useSelector } from "react-redux";
-import { getProfileByIdAPI } from "../services/ProfileService";
-import { errorNotification } from "../services/NotificationService";
+import { successNotification } from "../services/NotificationService";
 import { Info } from "./Info";
-import { setProfile } from "../../Slices/ProfileSlice";
+import { changeProfile } from "../../Slices/ProfileSlice";
 import { About } from "./About";
 import { Skills } from "./Skills";
 import { Experiences } from "./Experiences";
 import { Certifications } from "./Certifications";
+import { useHover } from "@mantine/hooks";
+import { RiImageEditFill } from "react-icons/ri";
 
 export const UserProfile = () => {
-  // Get User info from Redux
-  const user = useSelector((state: any) => state.user);
+  // Get Profile info from Redux
+  const profile = useSelector((state: any) => state.profile);
 
   const dispatch = useDispatch();
 
-  // GET Profile API Function
-  const fetchProfileFunction = async () => {
-    try {
-      const response = await getProfileByIdAPI(user.profileId);
+  // Mantine Hook
+  const { hovered, ref } = useHover();
 
-      // Update Redux state
-      dispatch(setProfile(response));
-    } catch (error: any) {
-      errorNotification("Failed to fetch profile", error.response?.data);
-    }
+  // Convert Image to Base64
+  const getBase64 = (file: any) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
   };
 
-  // Profile PageLoad workflow
-  useEffect(() => {
-    // ******* API Call *******
-    fetchProfileFunction();
-  }, []);
+  // handle : Image file change
+  const handleFileChange = async (image: any) => {
+    let picture: any = await getBase64(image);
+    // console.log("Base 64 Picture : ", picture);
+
+    let updatedProfile = { ...profile, image: picture.split(",")[1] };
+
+    // Redux - update profile api
+    dispatch(changeProfile(updatedProfile));
+
+    // Show Success Notification
+    successNotification("Success", "Profile Image updated successfully.");
+  };
 
   return (
     <div className="w-3/4 flex flex-col gap-8 mx-auto py-10">
@@ -45,11 +54,41 @@ export const UserProfile = () => {
           className="h-36 w-full rounded-t-xl"
         />
 
-        <img
-          src="/profilePhoto.png"
-          alt="Profile Photo"
-          className="absolute -bottom-6 left-4 w-32 h-32 rounded-full border-4 border-mine-shaft-800"
-        />
+        <div
+          ref={ref}
+          className="absolute flex items-center justify-center -bottom-6 left-4"
+        >
+          <Avatar
+            src={
+              profile.image
+                ? `data:image/jpeg;base64,${profile.image}`
+                : "/profilePhoto.png"
+            }
+            alt="Profile Photo"
+            className="!w-32 !h-32 rounded-full border-4 border-mine-shaft-800"
+          />
+
+          {hovered && (
+            <Overlay
+              className="!rounded-full absolute"
+              color="#000"
+              backgroundOpacity={0.65}
+            />
+          )}
+
+          {hovered && (
+            <RiImageEditFill className="absolute z-[300] !w-12 !h-12" />
+          )}
+
+          {hovered && (
+            <FileInput
+              className="absolute h-full w-full [&_*]:!h-full [&_*]:!rounded-full z-[301]"
+              variant="transparent"
+              accept="image/png, image/jpeg"
+              onChange={handleFileChange}
+            />
+          )}
+        </div>
       </div>
 
       {/* Row 2 - User Details */}

@@ -3,12 +3,37 @@ import { TbAsset, TbBell, TbSettings } from "react-icons/tb";
 import NavLinks from "./NavLinks";
 import { Link, useLocation } from "react-router-dom";
 import { ProfileMenu } from "./ProfileMenu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { errorNotification } from "../services/NotificationService";
+import { setProfile } from "../../Slices/ProfileSlice";
+import { getProfileByIdAPI } from "../services/ProfileService";
 
 const Header = () => {
   const location = useLocation();
 
+  // Get User info from Redux
   const user = useSelector((state: any) => state.user);
+
+  const dispatch = useDispatch();
+
+  // GET Profile API Function
+  const fetchProfileFunction = async () => {
+    try {
+      const response = await getProfileByIdAPI(user.profileId);
+
+      // Update Redux state
+      dispatch(setProfile(response));
+    } catch (error: any) {
+      errorNotification("Failed to fetch profile", error.response?.data);
+    }
+  };
+
+  // Profile PageLoad workflow
+  useEffect(() => {
+    // ******* API Call *******
+    fetchProfileFunction();
+  }, []);
   return location.pathname !== "/signup" && location.pathname !== "/login" ? (
     <div className="font-['poppins'] w-full h-20 flex justify-between items-center px-6 bg-mine-shaft-950 text-white">
       {/* Logo */}

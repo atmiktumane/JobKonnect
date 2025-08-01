@@ -3,7 +3,6 @@ import { BiMessageRounded } from "react-icons/bi";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import { IoLogOutOutline } from "react-icons/io5";
 import { FiMoon } from "react-icons/fi";
-import ProfilePhoto from "../../assets/profilePhoto.png";
 import { FaRegUserCircle } from "react-icons/fa";
 import { useState } from "react";
 import { LuSunMedium } from "react-icons/lu";
@@ -17,6 +16,8 @@ export const ProfileMenu = () => {
 
   // Redux Hook : to get value of that state (i.e., user)
   const user = useSelector((state: any) => state.user);
+
+  const profile = useSelector((state: any) => state.profile);
 
   const [openMenuDropdown, setOpenMenuDropdown] = useState(false);
   const [themeChecked, setThemeChecked] = useState(false);
@@ -37,7 +38,14 @@ export const ProfileMenu = () => {
       <Menu.Target>
         <div className="flex items-center gap-2 cursor-pointer">
           <p>{user.name}</p>
-          <Avatar src={ProfilePhoto} alt="ProfilePhoto" />
+          <Avatar
+            src={
+              profile.image
+                ? `data:image/jpeg;base64,${profile.image}`
+                : "/profilePhoto.png"
+            }
+            alt="Profile Photo"
+          />
         </div>
       </Menu.Target>
 
