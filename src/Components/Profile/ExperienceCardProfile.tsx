@@ -2,14 +2,32 @@ import { Button } from "@mantine/core";
 import { ExperienceInput } from "./ExperienceInput";
 import { useState } from "react";
 import { formatDate } from "../services/Utilities";
+import { useDispatch, useSelector } from "react-redux";
+import { changeProfile } from "../../Slices/ProfileSlice";
+import { successNotification } from "../services/NotificationService";
 
 export const ExperienceCardProfile = (props: any) => {
   // State : for Edit Experience
-  const [editExp, setEditExp] = useState<boolean>(false);
+  const [edit, setEdit] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
+
+  // Get Profile info from Redux
+  const profile = useSelector((state: any) => state.profile);
+
+  // Function : to delete experience
+  const handleDelete = () => {
+    let exp = [...profile.experiences];
+    exp.splice(props.index, 1);
+    let updatedProfile = { ...profile, experiences: exp };
+
+    dispatch(changeProfile(updatedProfile));
+    successNotification("Success", "Experience Deleted successfully.");
+  };
 
   return (
     <>
-      {!editExp && (
+      {!edit ? (
         <div className="w-full flex flex-col gap-5">
           {/* Row 1 */}
           <div className="flex justify-between">
@@ -37,7 +55,8 @@ export const ExperienceCardProfile = (props: any) => {
 
             {/* Right */}
             <p className="text-sm">
-              {formatDate(props.startDate)} - {formatDate(props.endDate)}
+              {formatDate(props.startDate)} -{" "}
+              {props.working ? "Present" : formatDate(props.endDate)}
             </p>
           </div>
 
@@ -48,30 +67,21 @@ export const ExperienceCardProfile = (props: any) => {
           {props.edit && (
             <div className="flex items-center gap-5">
               <Button
-                onClick={() => setEditExp(true)}
-                variant="outline"
+                onClick={() => setEdit(true)}
+                variant="light"
                 color="brightSun.4"
               >
                 Edit
               </Button>
 
-              <Button variant="light" color="red.8">
+              <Button onClick={handleDelete} variant="light" color="red.8">
                 Delete
               </Button>
             </div>
           )}
         </div>
-      )}
-
-      {/* (Conditional Rendering) */}
-      {editExp && (
-        <ExperienceInput
-          save={props.save}
-          close={() => setEditExp(false)}
-          parentDesc={props.description}
-          parentStartDate={props.startDate}
-          parentEndDate={props.endDate}
-        />
+      ) : (
+        <ExperienceInput {...props} setEdit={setEdit} />
       )}
     </>
   );

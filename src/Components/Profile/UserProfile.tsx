@@ -1,9 +1,6 @@
-import { ActionIcon, Divider } from "@mantine/core";
-import { ExperienceCardProfile } from "./ExperienceCardProfile";
+import { Divider } from "@mantine/core";
 import { CertificateCardProfile } from "./CertificateCardProfile";
-import { MdOutlineModeEditOutline } from "react-icons/md";
-import { useEffect, useState } from "react";
-import { FaRegSave } from "react-icons/fa";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfileByIdAPI } from "../services/ProfileService";
 import { errorNotification } from "../services/NotificationService";
@@ -11,17 +8,9 @@ import { Info } from "./Info";
 import { setProfile } from "../../Slices/ProfileSlice";
 import { About } from "./About";
 import { Skills } from "./Skills";
+import { Experiences } from "./Experiences";
 
 export const UserProfile = () => {
-  // State : to edit 5 sections (User Details, About section, Skills, Experience, Certifications) present in Profile Page
-  const [edit, setEdit] = useState<boolean[]>([
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
-
   // Get User info from Redux
   const user = useSelector((state: any) => state.user);
 
@@ -29,13 +18,6 @@ export const UserProfile = () => {
   const profile = useSelector((state: any) => state.profile);
 
   const dispatch = useDispatch();
-
-  // Handle Edit Function : to handle edit of sections
-  const handleEdit = (index: number) => {
-    const newEdit = [...edit];
-    newEdit[index] = !newEdit[index];
-    setEdit(newEdit);
-  };
 
   // GET Profile API Function
   const fetchProfileFunction = async () => {
@@ -89,38 +71,7 @@ export const UserProfile = () => {
       <Divider size="sm" />
 
       {/* Row 5 - Experience */}
-      <div>
-        {/* row 1 - Title + Action Buttons */}
-        <div className="flex justify-between">
-          {/* Col 1 - Title */}
-          <h4 className="text-xl font-semibold mb-5">Experience</h4>
-
-          {/* Col 2 (Condition) - Edit + Save Button */}
-          <ActionIcon
-            onClick={() => handleEdit(3)}
-            variant="light"
-            aria-label="Settings"
-          >
-            {edit[3] ? (
-              <FaRegSave className="w-5 h-5 text-bright-sun-400" />
-            ) : (
-              <MdOutlineModeEditOutline className="w-5 h-5 text-bright-sun-400" />
-            )}
-          </ActionIcon>
-        </div>
-
-        {/* row 2 (condition) - Edit + Preview Skills Tag */}
-        <div className="flex flex-col gap-10">
-          {profile?.experiences?.map((experience: any, index: number) => (
-            <ExperienceCardProfile
-              save={() => handleEdit(3)}
-              key={index}
-              {...experience}
-              edit={edit[3]}
-            />
-          ))}
-        </div>
-      </div>
+      <Experiences />
 
       <Divider size="sm" />
 
