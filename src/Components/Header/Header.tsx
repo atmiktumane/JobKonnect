@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { errorNotification } from "../services/NotificationService";
 import { setProfile } from "../../Slices/ProfileSlice";
-import { getProfileByIdAPI } from "../services/ProfileService";
+import { getProfileByIdAPI } from "../../Services/ProfileService";
 
 const Header = () => {
   const location = useLocation();

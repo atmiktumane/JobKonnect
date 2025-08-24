@@ -3,10 +3,15 @@ import { BsBriefcase } from "react-icons/bs";
 import { TbPremiumRights, TbRecharging } from "react-icons/tb";
 
 const cards = [
-  { name: "Location", icon: LuMapPin, value: "New York" },
-  { name: "Experience", icon: BsBriefcase, value: "Expert" },
-  { name: "Salary", icon: TbPremiumRights, value: "48 LPA" },
-  { name: "Job Type", icon: TbRecharging, value: "Full Time" },
+  { name: "Location", icon: LuMapPin, value: "New York", id: "location" },
+  { name: "Experience", icon: BsBriefcase, value: "Expert", id: "experience" },
+  {
+    name: "Salary",
+    icon: TbPremiumRights,
+    value: "48 LPA",
+    id: "packageOffered",
+  },
+  { name: "Job Type", icon: TbRecharging, value: "Full Time", id: "jobType" },
 ];
 
 const skills = [

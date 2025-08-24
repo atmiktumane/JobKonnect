@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { updateProfileAPI } from "../Components/services/ProfileService";
+import { updateProfileAPI } from "../Services/ProfileService";
 
 const ProfileSlice = createSlice({
   name: "profile",

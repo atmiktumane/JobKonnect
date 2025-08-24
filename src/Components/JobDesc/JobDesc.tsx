@@ -1,12 +1,14 @@
 import { Button, Divider } from "@mantine/core";
 import { TbBookmark } from "react-icons/tb";
-import { cards, desc, skills } from "../../Data/JobDescData";
+import { cards } from "../../Data/JobDescData";
 //@ts-ignore
 import DOMPurify from "dompurify";
 import { Link } from "react-router-dom";
+import { timeAgoFunction } from "../services/Utilities";
 
 export const JobDesc = (props: any) => {
-  const data = DOMPurify.sanitize(desc);
+  const data = DOMPurify.sanitize(props.description);
+
   return (
     <div>
       {/* Row 1 */}
@@ -16,7 +18,7 @@ export const JobDesc = (props: any) => {
           {/* Company Image */}
           <div className="w-fit bg-mine-shaft-800 p-0.5 rounded-lg">
             <img
-              src="/Companies_Logo/Google.png"
+              src={`/Companies_Logo/${props.company}.png`}
               alt="Company Logo"
               className="h-14 w-14"
             />
@@ -24,9 +26,10 @@ export const JobDesc = (props: any) => {
 
           {/* Job Data */}
           <div>
-            <h5 className="text-lg font-semibold">Software Engineer III</h5>
+            <h5 className="text-lg font-semibold">{props.jobTitle}</h5>
             <p className="text-mine-shaft-300">
-              Google &bull; 3 days ago &bull; 48 Applicants
+              {props.company} &bull; {timeAgoFunction(props.postTime)} &bull;{" "}
+              {props.applicants ? props.applicants.length : 0} Applicants
             </p>
           </div>
         </div>
@@ -49,7 +52,7 @@ export const JobDesc = (props: any) => {
           ) : (
             <>
               {/* Apply Button */}
-              <Link to="/apply-job">
+              <Link to={`/apply-job/${props.id}`}>
                 <Button variant="light" color="brightSun.4">
                   Apply
                 </Button>
@@ -74,7 +77,10 @@ export const JobDesc = (props: any) => {
                 {<item.icon className="text-3xl text-bright-sun-400" />}
               </div>
               <h6 className="text-sm">{item.name}</h6>
-              <p className="font-semibold">{item.value}</p>
+              <p className="font-semibold">
+                {props ? props[item.id] : "NA"}{" "}
+                {item.id == "packageOffered" && <>LPA</>}
+              </p>
             </div>
           );
         })}
@@ -87,13 +93,13 @@ export const JobDesc = (props: any) => {
         <h4 className="text-lg font-semibold mb-4">Required Skills</h4>
 
         <div className="flex flex-wrap gap-2">
-          {skills.map((item, index) => {
+          {props?.skillsRequired?.map((skill: any, index: number) => {
             return (
               <div
                 key={index}
                 className="bg-bright-sun-400/15 text-sm text-bright-sun-400 w-fit px-2 py-0.5 rounded-full"
               >
-                {item}
+                {skill}
               </div>
             );
           })}
@@ -119,7 +125,7 @@ export const JobDesc = (props: any) => {
             {/* Company Image */}
             <div className="w-fit bg-mine-shaft-800 p-0.5 rounded-lg">
               <img
-                src="/Companies_Logo/Google.png"
+                src={`/Companies_Logo/${props.company}.png`}
                 alt="Company Logo"
                 className="h-14 w-14"
               />
@@ -127,13 +133,13 @@ export const JobDesc = (props: any) => {
 
             {/* Data */}
             <div>
-              <h5 className="text-lg font-semibold">Google</h5>
+              <h5 className="text-lg font-semibold">{props.company}</h5>
               <p className="text-mine-shaft-300">10K+ Employees</p>
             </div>
           </div>
 
           {/* Right - Apply Button */}
-          <Link to="/company">
+          <Link to={`/company/${props.company}`}>
             <Button variant="light" color="brightSun.4">
               Company Page
             </Button>

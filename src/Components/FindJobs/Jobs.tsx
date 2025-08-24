@@ -1,8 +1,25 @@
 import { Sort } from "./Sort";
-import { jobList } from "../../Data/JobsData";
+// import { jobList } from "../../Data/JobsData";
 import { JobCard } from "./JobCard";
+import { useEffect, useState } from "react";
+import { getAllJobsAPI } from "../../Services/JobService";
+import { errorNotification } from "../services/NotificationService";
 
 export const Jobs = () => {
+  const [jobList, setJobList] = useState([{}]);
+
+  const getAllJobsFunction = async () => {
+    try {
+      const response = await getAllJobsAPI();
+      setJobList(response);
+    } catch (error: any) {
+      errorNotification("Failed to fetch all jobs", error.response?.data);
+    }
+  };
+
+  useEffect(() => {
+    getAllJobsFunction();
+  }, []);
   return (
     <div className="py-8 flex flex-col gap-8">
       {/* Heading Row */}
