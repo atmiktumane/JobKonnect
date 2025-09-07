@@ -37,4 +37,14 @@ function timeAgoFunction(timeInput: string) {
   return `${years} year${years !== 1 ? "s" : ""} ago`;
 }
 
-export { formatDate, timeAgoFunction };
+// Convert Image to Base64
+const convertToBase64Function = (file: any) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+};
+
+export { formatDate, timeAgoFunction, convertToBase64Function };

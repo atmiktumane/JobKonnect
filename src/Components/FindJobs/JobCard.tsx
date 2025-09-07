@@ -1,15 +1,32 @@
-import { Divider, Text } from "@mantine/core";
+import { Button, Divider, Text } from "@mantine/core";
 import { FaRegClock } from "react-icons/fa";
-import { TbBookmark } from "react-icons/tb";
+import { TbBookmark, TbBookmarkFilled } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import { timeAgoFunction } from "../services/Utilities";
+import { useDispatch, useSelector } from "react-redux";
+import { changeProfile } from "../../Slices/ProfileSlice";
 
 export const JobCard = (props: any) => {
+  const profile = useSelector((state: any) => state.profile);
+
+  const dispatch = useDispatch();
+
+  const handleSaveJob = () => {
+    let savedJobs: any = [...(profile.savedJobs ?? [])];
+
+    // if Job is Saved then remove, else add job in savedJobs
+    if (savedJobs?.includes(props.id)) {
+      savedJobs = savedJobs?.filter((id: any) => id !== props.id);
+    } else {
+      savedJobs = [...savedJobs, props.id];
+    }
+
+    let updatedProfile = { ...profile, savedJobs: savedJobs };
+    dispatch(changeProfile(updatedProfile));
+  };
+
   return (
-    <Link
-      to={`/job-desc/${props.id}`}
-      className="flex flex-col gap-3 p-4 bg-mine-shaft-900 rounded-lg hover:shadow-[0_0_3px_3px_black] hover:shadow-bright-sun-300 cursor-pointer"
-    >
+    <div className="flex flex-col gap-3 p-4 bg-mine-shaft-900 rounded-lg hover:shadow-[0_0_3px_3px_black] hover:shadow-bright-sun-300 cursor-pointer">
       {/* Row 1 */}
       <div className="flex justify-between">
         <div className="flex items-center gap-3">
@@ -33,7 +50,17 @@ export const JobCard = (props: any) => {
         </div>
 
         {/* BookMark Icon */}
-        <TbBookmark className="text-2xl" />
+        {profile.savedJobs?.includes(props.id) ? (
+          <TbBookmarkFilled
+            onClick={handleSaveJob}
+            className="cursor-pointer text-bright-sun-400 text-2xl"
+          />
+        ) : (
+          <TbBookmark
+            onClick={handleSaveJob}
+            className="cursor-pointer hover:text-bright-sun-400 text-2xl"
+          />
+        )}
       </div>
 
       {/* Row 2 */}
@@ -60,6 +87,12 @@ export const JobCard = (props: any) => {
           </p>
         </div>
       </div>
-    </Link>
+
+      <Link to={`/job-desc/${props.id}`}>
+        <Button fullWidth color="brightSun.4" variant="outline">
+          View Job
+        </Button>
+      </Link>
+    </div>
   );
 };

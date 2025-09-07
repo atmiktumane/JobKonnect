@@ -34,7 +34,7 @@ const getAllJobsAPI = async () => {
 };
 
 // GET BY ID API : Get job by id
-const getJobByIDAPI = async (id: string | any) => {
+const getJobByIDAPI = async (id: any) => {
   try {
     // API Call
     const response = await axios.get(`${apiUrl}/api/v1/jobs/${id}`);
@@ -49,4 +49,22 @@ const getJobByIDAPI = async (id: string | any) => {
   }
 };
 
-export { postJobAPI, getAllJobsAPI, getJobByIDAPI };
+// POST API : Post Job
+const applyJobAPI = async (id: any, applicant: any) => {
+  try {
+    const response = await axios.post(
+      `${apiUrl}/api/v1/jobs/apply/${id}`,
+      applicant
+    );
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data);
+    } else {
+      console.error("An unexpected error occurred : ", error);
+    }
+  }
+};
+
+export { postJobAPI, getAllJobsAPI, getJobByIDAPI, applyJobAPI };

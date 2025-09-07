@@ -9,6 +9,7 @@ import { Experiences } from "./Experiences";
 import { Certifications } from "./Certifications";
 import { useHover } from "@mantine/hooks";
 import { RiImageEditFill } from "react-icons/ri";
+import { convertToBase64Function } from "../services/Utilities";
 
 export const UserProfile = () => {
   // Get Profile info from Redux
@@ -19,19 +20,9 @@ export const UserProfile = () => {
   // Mantine Hook
   const { hovered, ref } = useHover();
 
-  // Convert Image to Base64
-  const getBase64 = (file: any) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  };
-
   // handle : Image file change
   const handleFileChange = async (image: any) => {
-    let picture: any = await getBase64(image);
+    let picture: any = await convertToBase64Function(image);
     // console.log("Base 64 Picture : ", picture);
 
     let updatedProfile = { ...profile, image: picture.split(",")[1] };

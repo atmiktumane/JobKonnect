@@ -1,13 +1,33 @@
 import { Button, Divider } from "@mantine/core";
-import { TbBookmark } from "react-icons/tb";
+import { TbBookmark, TbBookmarkFilled } from "react-icons/tb";
 import { cards } from "../../Data/JobDescData";
 //@ts-ignore
 import DOMPurify from "dompurify";
 import { Link } from "react-router-dom";
 import { timeAgoFunction } from "../services/Utilities";
+import { useDispatch, useSelector } from "react-redux";
+import { changeProfile } from "../../Slices/ProfileSlice";
 
 export const JobDesc = (props: any) => {
   const data = DOMPurify.sanitize(props.description);
+
+  const profile = useSelector((state: any) => state.profile);
+
+  const dispatch = useDispatch();
+
+  const handleSaveJob = () => {
+    let savedJobs: any = [...(profile.savedJobs ?? [])];
+
+    // if Job is Saved then remove, else add job in savedJobs
+    if (savedJobs?.includes(props.id)) {
+      savedJobs = savedJobs?.filter((id: any) => id !== props.id);
+    } else {
+      savedJobs = [...savedJobs, props.id];
+    }
+
+    let updatedProfile = { ...profile, savedJobs: savedJobs };
+    dispatch(changeProfile(updatedProfile));
+  };
 
   return (
     <div>
@@ -59,7 +79,18 @@ export const JobDesc = (props: any) => {
               </Link>
 
               {/* Save Job Icon */}
-              <TbBookmark className="text-2xl text-bright-sun-400 cursor-pointer" />
+              {/* BookMark Icon */}
+              {profile.savedJobs?.includes(props.id) ? (
+                <TbBookmarkFilled
+                  onClick={handleSaveJob}
+                  className="cursor-pointer text-bright-sun-400 text-2xl"
+                />
+              ) : (
+                <TbBookmark
+                  onClick={handleSaveJob}
+                  className="cursor-pointer hover:text-bright-sun-400 text-2xl"
+                />
+              )}
             </>
           )}
         </div>
